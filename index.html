@@ -50,13 +50,14 @@ html,body{height:100%;overflow:hidden;background:#070B18;font:13px/1.45 ui-round
 <span class="hint">drag pan · wheel zoom · <b>hover a moon for its screen</b> · click moon = trace flow · click planet = fly in</span>
 <input id="search" placeholder="find screen / step…">
 <button id="edgetog">🕸 edges: auto</button>
+<button id="imgtog">🖼 images: on</button>
 <button class="fchip on" data-f="all">all</button><button class="fchip" data-f="student">student</button><button class="fchip" data-f="staff">staff</button><button class="fchip" data-f="system">system</button><button class="fchip" data-f="built">✓ built</button><button class="fchip" data-f="new">✦ new</button>
 <span class="lg"><span><span class="dot" style="background:#12B76A"></span>built</span><span><span class="dot" style="background:#fff"></span>new</span><span><span class="dot" style="background:#F2C661"></span>state</span><span><span class="dot" style="background:#64748B"></span>system</span></span>
 </div>
 <div id="phasejump"></div>
 <div id="tip"></div>
 <div id="drawer"><div class="inner" id="drawerin"></div></div>
-<div id="zoom"><button id="zin">+</button><button id="zout">−</button><button id="zfit">⤢</button></div>
+<div id="zoom"><button id="backbtn" title="back" style="display:none">⟵</button><button id="zin">+</button><button id="zout">−</button><button id="zfit">⤢</button></div>
 <canvas id="minimap" width="150" height="110"></canvas>
 <script>// ===== 10x Neural Journey Map — canvas engine =====
 const PHASES = ['Invite','Auth','Onboarding','Roadmap','Classroom','Assignments','Events','Social & League','Progression','Outcomes'];
@@ -109,6 +110,13 @@ const reach=(s,map)=>{ const seen=new Set([s]),q=[s]; while(q.length){const c=q.
 
 // ---------- camera ----------
 let cam={x:0,y:0,s:0.34}, camTo={...cam}, anim=null;
+const camHist=[];
+function pushHist(){ camHist.push({x:cam.x,y:cam.y,s:cam.s}); if(camHist.length>24) camHist.shift(); }
+function goBack(){ const prev=camHist.pop(); closeInfo();
+  if(prev){ flyTo(prev.x,prev.y,prev.s,450); }
+  if(traced){ traced=null; keepSet=null; clearPipeline(); }
+  updateBackBtn(); }
+function updateBackBtn(){ const b=document.getElementById('backbtn'); if(b) b.style.display=camHist.length?'block':'none'; }
 function flyTo(x,y,s,dur=750,scrX,scrY){
   const Wpx=innerWidth, Hpx=innerHeight;
   const cx = scrX!==undefined ? x - (scrX - Wpx/2)/s : x;
@@ -126,6 +134,9 @@ const sx=x=>(x-cam.x)*cam.s+W/2, sy=y=>(y-cam.y)*cam.s+H/2;
 
 // ---------- state ----------
 let hoverNode=null, hoverHub=null, traced=null, keepSet=null, focusHub=null, filter='all', edgeMode='auto';
+let showImgs=true;
+document.getElementById('imgtog').onclick=()=>{ showImgs=!showImgs;
+  document.getElementById('imgtog').textContent='🖼 images: '+(showImgs?'on':'off'); };
 let pipeMode=false;
 function layoutPipeline(){
   const seqOf = id => nodeById[id] ? nodeById[id].sqi : 9999;
@@ -219,6 +230,12 @@ function frame(now){
   const zoomed=cam.s>0.85;
   const showEdges = edgeMode==='on' || (edgeMode==='auto' && (zoomed||hoverNode||traced));
 
+  // ---- smooth zoom ----
+  if(zoomT){ const k=1-Math.pow(0.78,dt/16);
+    cam.s += (zoomT.s-cam.s)*k;
+    cam.x = zoomT.wx - (zoomT.mx-W/2)/cam.s;
+    cam.y = zoomT.wy - (zoomT.my-H/2)/cam.s;
+    if(Math.abs(zoomT.s-cam.s)<0.002) zoomT=null; }
   // ---- animate node display positions ----
   const lerpK = 1-Math.pow(0.88, dt/16);
   for(const n of nodes){ n.dx+=(n.tx-n.dx)*lerpK; n.dy+=(n.ty-n.dy)*lerpK; }
@@ -243,9 +260,15 @@ function frame(now){
         ctx2d.beginPath(); ctx2d.moveTo(x1,y1);
         ctx2d.bezierCurveTo(ex1+18,y1, emx-18,y2, emx,y2);
         ctx2d.lineTo(x2,y2); ctx2d.stroke();
-        if(e.label){ ctx2d.globalAlpha=1; ctx2d.fillStyle='#C7D2F2';
+        if(e.label && isChainEdge){
+          const lt=e.label.slice(0,30);
           ctx2d.font='700 9px ui-rounded,system-ui'; ctx2d.textAlign='center';
-          ctx2d.fillText(e.label.slice(0,30), emx, (y1+y2)/2-5); }
+          const tw2=ctx2d.measureText(lt).width;
+          const lx=emx, ly=(y1+y2)/2-10;
+          ctx2d.globalAlpha=0.92; ctx2d.fillStyle='#0B1020';
+          ctx2d.beginPath(); ctx2d.roundRect(lx-tw2/2-5,ly-8,tw2+10,13,5); ctx2d.fill();
+          ctx2d.globalAlpha=1; ctx2d.fillStyle='#C7D2F2';
+          ctx2d.fillText(lt, lx, ly+2); }
         continue;
       }
       if((x1<-80&&x2<-80)||(x1>W+80&&x2>W+80)||(y1<-80&&y2<-80)||(y1>H+80&&y2>H+80)) continue;
@@ -325,7 +348,7 @@ function frame(now){
     const dim=dimmed(n);
     const sel = traced===n.id;
     const isStub = pipeMode && stubSet.has(n.id);
-    const isCard = pipeMode && window.__pipeIdx && window.__pipeIdx[n.id]!==undefined;
+    const isCard = pipeMode && showImgs && window.__pipeIdx && window.__pipeIdx[n.id]!==undefined;
     if(isCard) { /* always rendered as filmstrip card below */ }
     else {
     const r=(sel?2.1:1)*(isStub?0.62:1)*Math.max(2.1,4.4*Math.min(2.2,cam.s));
@@ -371,7 +394,7 @@ function frame(now){
   }
   ctx2d.globalAlpha=1;
   // ---- pipeline screenshot filmstrip ----
-  if(pipeMode && window.__pipeIdx){
+  if(pipeMode && showImgs && window.__pipeIdx){
     const cw=Math.min(260,Math.max(56,84*cam.s)), ch=cw*1.9;
     for(const n of nodes){
       const idx=window.__pipeIdx[n.id]; if(idx===undefined) continue;
@@ -382,9 +405,20 @@ function frame(now){
       ctx2d.beginPath(); ctx2d.roundRect(X-cw/2,Y-ch/2,cw,ch,10); ctx2d.clip();
       const im=n.screen?shotImg(n.screen):null;
       if(im&&im.complete&&im.naturalWidth){ ctx2d.drawImage(im,X-cw/2,Y-ch/2,cw,ch); }
-      else { ctx2d.fillStyle='#141B38'; ctx2d.fillRect(X-cw/2,Y-ch/2,cw,ch);
-        ctx2d.fillStyle='#3D4A78'; ctx2d.font='700 9px ui-rounded'; ctx2d.textAlign='center';
-        ctx2d.fillText(n.screen||'state',X,Y); }
+      else {
+        // state card: dashed frame, big icon, title, one-liner
+        ctx2d.fillStyle='rgba(66,50,8,.55)'; ctx2d.fillRect(X-cw/2,Y-ch/2,cw,ch);
+        ctx2d.fillStyle='#F2C661'; ctx2d.font='400 '+Math.round(cw*0.42)+'px ui-rounded'; ctx2d.textAlign='center'; ctx2d.textBaseline='middle';
+        ctx2d.fillText(n.icon||'⚙',X,Y-ch*0.18);
+        ctx2d.fillStyle='#F5D9A8'; ctx2d.font='800 '+Math.max(9,cw*0.11)+'px ui-rounded';
+        const words=(n.desc||n.title).split(' '); let l1='',l2='';
+        for(const w of words){ if((l1+' '+w).length<Math.max(10,cw/7)) l1+=(l1?' ':'')+w; else l2+=(l2?' ':'')+w; }
+        ctx2d.fillText(l1,X,Y+ch*0.12);
+        if(l2) ctx2d.fillText(l2.slice(0,Math.max(12,cw/6))+'…',X,Y+ch*0.12+Math.max(11,cw*0.13));
+        ctx2d.fillStyle='#8a6a1f'; ctx2d.font='700 8.5px ui-rounded';
+        ctx2d.fillText('STATE — no screen',X,Y-ch/2+8);
+        ctx2d.textBaseline='alphabetic';
+      }
       ctx2d.restore();
       // border + step badge
       ctx2d.strokeStyle=n.c; ctx2d.lineWidth=2;
@@ -547,8 +581,8 @@ cv.addEventListener('pointermove',e=>{
 });
 cv.addEventListener('pointerup',e=>{ const wasDrag=moved; drag=null;
   if(wasDrag) return;
-  const p=pick(e); if(!p){ traced=null; keepSet=null; focusHub=null; closeInfo(); clearPipeline(); return; }
-  if(p.type==='hub'){ focusHub=p.v; flyTo(p.v.x,p.v.y,Math.max(0.9,900/(p.v.r*2.6))); openInfo(hubInfoHTML(p.v)); return; }
+  const p=pick(e); if(!p){ traced=null; keepSet=null; focusHub=null; closeInfo(); clearPipeline(); goBack(); return; }
+  if(p.type==='hub'){ focusHub=p.v; pushHist(); flyTo(p.v.x,p.v.y,Math.max(0.9,900/(p.v.r*2.6))); openInfo(hubInfoHTML(p.v)); updateBackBtn(); return; }
   if(p.type==='sun'){ openInfo(sunInfoHTML()); return; }
   const n=p.v;
   if(pipeMode){
@@ -557,20 +591,23 @@ cv.addEventListener('pointerup',e=>{ const wasDrag=moved; drag=null;
     // node outside the pipeline: fall through and re-trace from it
   } else if(traced===n.id){ traced=null; keepSet=null; closeInfo(); clearPipeline(); return; }
   traced=n.id; keepSet=new Set([...reach(n.id,adj),...reach(n.id,radj)]);
+  pushHist();
   layoutPipeline();
-  openInfo(nodeInfoHTML(n));
+  openInfo(nodeInfoHTML(n)); updateBackBtn();
 });
 cv.addEventListener('dblclick',e=>{
   const r=cv.getBoundingClientRect();
   const wx=cam.x+(e.clientX-r.left-W/2)/cam.s, wy=cam.y+(e.clientY-r.top-H/2)/cam.s;
   flyTo(wx,wy,Math.min(3.4,cam.s*2.1),350,e.clientX,e.clientY);
 });
+let zoomT=null;
 cv.addEventListener('wheel',e=>{ e.preventDefault();
-  const f=Math.exp(-e.deltaY*(e.deltaMode===1?0.04:0.0022));
+  const f=Math.exp(-Math.max(-350,Math.min(350,e.deltaY))*(e.deltaMode===1?0.04:0.0019));
   const ns=Math.min(3.4,Math.max(0.08,cam.s*f));
-  const r=cv.getBoundingClientRect(), mx=e.clientX-r.left-W/2, my=e.clientY-r.top-H/2;
-  cam.x+=mx/cam.s-mx/ns; cam.y+=my/cam.s-my/ns; cam.s=ns; anim=null;
+  const r=cv.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top;
+  zoomT={s:ns, mx, my, wx:cam.x+(mx-W/2)/cam.s, wy:cam.y+(my-H/2)/cam.s}; anim=null;
 },{passive:false});
+document.getElementById('backbtn').onclick=()=>goBack();
 document.getElementById('zin').onclick=()=>flyTo(cam.x,cam.y,Math.min(3.4,cam.s*1.7),220);
 document.getElementById('zout').onclick=()=>flyTo(cam.x,cam.y,Math.max(0.08,cam.s*0.6),220);
 document.getElementById('zfit').onclick=()=>flyTo(0,0,0.34);
