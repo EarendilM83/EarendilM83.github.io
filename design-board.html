@@ -1,0 +1,414 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10x — Design board · the core loop, crafted</title><style>
+/* ================= TOKENS ================= */
+:root{
+  --paper:#FBF7F2; --ink:#0C1736; --ink2:#4A5578; --ink3:#8A93B2;
+  --brand:#1F6BF6; --brand-deep:#1557C8; --brand-soft:#E4EFFF;
+  --gold:#F2C661; --gold-deep:#C9A227; --gold-soft:#FFF4CE;
+  --grn:#12B76A; --grn-deep:#0E8A4E; --grn-soft:#DDF5E8;
+  --red:#E5484D; --red-soft:#FFECE8;
+  --card:#FFFFFF; --line:#EAE4DC; --line2:#E1DAF0;
+  --r-sh:0 2px 0 rgba(12,23,54,.06),0 12px 24px rgba(12,23,54,.08);
+  --r-sh-lg:0 4px 0 rgba(12,23,54,.05),0 24px 48px rgba(12,23,54,.12);
+}
+*{box-sizing:border-box;margin:0;-webkit-font-smoothing:antialiased}
+body{background:#11142A;font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#E9ECF7;
+  background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px}
+
+/* ================= BOARD CHROME (the "figma" frame) ================= */
+.topbar{position:sticky;top:0;z-index:50;background:#0B0E1E;border-bottom:1px solid rgba(255,255,255,.08);
+  padding:10px 22px;display:flex;align-items:center;gap:14px}
+.topbar .dot{width:11px;height:11px;border-radius:50%}
+.topbar b{font:800 13px ui-rounded;color:#fff}
+.topbar span{font:600 11px ui-rounded;color:#8A93B2}
+.topbar .f{font:700 10.5px ui-rounded;color:#5A6478;background:#171B33;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:3px 8px}
+.board{max-width:1600px;margin:0 auto;padding:44px 30px 120px}
+.bsec{margin-bottom:70px}
+.bsec>.slabel{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.bsec>.slabel .n{font:900 11px ui-rounded;color:#F2C661;letter-spacing:.18em}
+.bsec>.slabel .t{font:900 21px ui-rounded;color:#fff;letter-spacing:-.3px}
+.bsec>.sdesc{font:600 12.5px ui-rounded;color:#8A93B2;max-width:72ch;margin-bottom:22px}
+.srow{display:flex;gap:36px;flex-wrap:wrap;align-items:flex-start}
+.scard{display:flex;flex-direction:column;gap:10px}
+.sname{font:800 11px ui-rounded;color:#C7D2F2;display:flex;gap:8px;align-items:center}
+.sname .id{font:900 9px ui-rounded;color:#0C1736;background:#F2C661;border-radius:5px;padding:2px 6px;letter-spacing:.08em}
+.snote{font:600 10.5px ui-rounded;color:#68709A;max-width:390px;line-height:1.55}
+.snote b{color:#A9B4D8}
+.snote .tok{color:#F2C661;font-weight:800}
+
+/* ================= PHONE FRAME ================= */
+.ph{width:390px;height:844px;border-radius:46px;background:#0B1020;padding:11px;position:relative;
+  box-shadow:0 0 0 2px #26324E,0 30px 60px rgba(0,0,0,.55)}
+.ph .scr{width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--paper);
+  display:flex;flex-direction:column;position:relative}
+/* status bar */
+.sbar{display:flex;justify-content:space-between;align-items:center;padding:14px 26px 2px;flex:none}
+.sbar .tm{font:800 13.5px ui-rounded;color:var(--ink)}
+.sbar .si{display:flex;gap:5px;align-items:center;color:var(--ink)}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:112px;height:30px;border-radius:99px;background:#0B1020;z-index:5}
+
+/* ============ SHARED APP CHROME ============ */
+.ah{flex:none;display:flex;align-items:center;gap:8px;padding:10px 16px 8px;background:var(--paper);position:relative;z-index:2}
+.ah .lg{font:900 19px ui-rounded;color:var(--ink);letter-spacing:-.5px}
+.ah .sp{flex:1}
+.hchip{display:flex;align-items:center;gap:4px;border:1.5px solid var(--line);border-radius:99px;padding:4px 9px;
+  font:800 11.5px ui-rounded;color:var(--ink);background:#fff}
+.hchip.gold{background:var(--gold-soft);border-color:var(--gold)}
+.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#1F6BF6);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:900 12px ui-rounded;border:2px solid #fff;box-shadow:0 1px 4px rgba(12,23,54,.2)}
+/* kata bubble */
+.krow{display:flex;gap:9px;align-items:flex-start;padding:8px 16px 2px;position:relative;z-index:2}
+.kata{width:44px;height:44px;flex:none;filter:drop-shadow(0 2px 3px rgba(12,23,54,.18))}
+.kbub{background:#fff;border:1.5px solid var(--line);border-radius:16px 16px 16px 4px;padding:9px 12px;
+  font:700 12px/1.45 ui-rounded;color:var(--ink);box-shadow:var(--r-sh);position:relative}
+.kbub::before{content:"";position:absolute;left:-7.5px;top:14px;width:12px;height:12px;background:#fff;
+  border-left:1.5px solid var(--line);border-bottom:1.5px solid var(--line);transform:rotate(45deg)}
+/* map */
+.map{flex:1;position:relative;overflow:hidden}
+.map svg{position:absolute;inset:0}
+/* bottom nav */
+.bnav{flex:none;display:flex;background:#fff;border-top:1.5px solid var(--line);padding:8px 6px 20px;position:relative;z-index:2}
+.bnav .bi{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font:800 9.5px ui-rounded;color:var(--ink3)}
+.bnav .bi .ic{font-size:17px;line-height:1}
+.bnav .bi.on{color:var(--brand)}
+.bnav .bi.on .icwrap{background:var(--brand-soft);border-radius:99px;padding:3px 14px}
+.bnav .bi .icwrap{padding:3px 14px;border-radius:99px}
+/* node atoms (HTML version of the map) */
+.node{position:absolute;display:flex;flex-direction:column;align-items:center;gap:5px;transform:translate(-50%,-50%)}
+.ndot{width:52px;height:52px;border-radius:50%;border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;
+  font:900 15px ui-rounded;color:#fff;box-shadow:0 4px 0 rgba(12,23,54,.85)}
+.ndot.gold{background:var(--gold);color:var(--ink)}
+.ndot.locked{background:#C9CEDB;color:#fff;border-color:#8A93AC;box-shadow:0 4px 0 rgba(138,147,172,.85)}
+.nlab{font:800 9.5px ui-rounded;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:99px;padding:2px 8px;white-space:nowrap;box-shadow:var(--r-sh)}
+/* current node */
+.cur .ring{position:absolute;width:96px;height:96px;border-radius:50%;border:2.5px dashed var(--brand);animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cur .ndot{width:76px;height:76px;background:var(--brand);font-size:22px;box-shadow:0 5px 0 var(--brand-deep)}
+.cur .nlab{background:var(--ink);color:#fff;border-color:var(--ink);font-size:10.5px;padding:3px 10px}
+.cur .nsub{font:800 8.5px ui-rounded;color:var(--ink2)}
+/* start cta */
+.cta{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,var(--paper) 26%);
+  padding:26px 16px 12px;z-index:3}
+.cta .ccard{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:13px 14px;box-shadow:0 5px 0 rgba(12,23,54,.9)}
+.cta .ct1{font:900 14px ui-rounded;color:var(--ink)}
+.cta .ct2{font:700 11px ui-rounded;color:var(--ink2);margin-top:2px}
+.b3d{display:block;width:100%;margin-top:10px;background:var(--brand);border:2px solid var(--ink);border-radius:14px;
+  color:#fff;font:900 14px ui-rounded;padding:12px;box-shadow:0 5px 0 var(--brand-deep);text-align:center;letter-spacing:.4px}
+.b3d.grn{background:var(--grn);box-shadow:0 5px 0 var(--grn-deep)}
+
+/* ---- runner ---- */
+.runhd{flex:none;padding:6px 16px 0}
+.runtop{display:flex;align-items:center;gap:12px}
+.xbtn{width:34px;height:34px;border-radius:12px;border:2px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;font:900 14px ui-rounded;color:var(--ink2);box-shadow:0 3px 0 var(--line)}
+.pbar{flex:1;height:14px;border-radius:99px;background:#EAE4DC;border:2px solid var(--line);overflow:hidden}
+.pbar i{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--gold),#FFD97A);border-radius:99px}
+.qcount{font:900 12px ui-rounded;color:var(--ink2);border:2px solid var(--line);border-radius:99px;padding:4px 10px;background:#fff}
+.flabel{margin-top:14px;display:inline-block;background:var(--ink);color:#fff;font:800 10px ui-rounded;letter-spacing:.1em;border-radius:8px;padding:4px 10px}
+.qcard{margin-top:12px;background:#fff;border:2px solid var(--ink);border-radius:20px;padding:16px;box-shadow:0 5px 0 rgba(12,23,54,.9)}
+.qtext{font:900 19px/1.3 ui-rounded;color:var(--ink);letter-spacing:-.2px}
+.opts{padding:0 16px;margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:0 3px 0 rgba(12,23,54,.08)}
+.opt .let{width:30px;height:30px;border-radius:10px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font:900 13px ui-rounded;color:var(--ink2);flex:none}
+.opt .ot{font:700 12.5px/1.4 ui-rounded;color:var(--ink)}
+.opt.sel{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 3px 0 rgba(31,107,246,.35)}
+.opt.sel .let{background:var(--brand);border-color:var(--brand);color:#fff}
+.opt.sel .ot{color:var(--brand-deep)}
+.runft{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:0 16px 26px}
+.hintrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.hintchip{background:var(--gold-soft);border:2px solid var(--gold);color:var(--gold-deep);font:800 11px ui-rounded;border-radius:99px;padding:5px 11px}
+.kmini{display:flex;align-items:center;gap:7px;font:italic 700 11px ui-rounded;color:var(--ink2)}
+.kmini img{width:26px;height:26px}
+
+/* ---- feedback correct sheet ---- */
+.fbdim{position:absolute;inset:0;background:rgba(251,247,242,.55);backdrop-filter:saturate(.6)}
+.fbsheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:2.5px solid var(--grn);
+  border-radius:26px 26px 0 0;padding:16px 16px 26px;box-shadow:0 -10px 30px rgba(12,23,54,.15);z-index:4}
+.fbrow{display:flex;align-items:center;gap:10px}
+.fbcheck{width:44px;height:44px;border-radius:50%;background:var(--grn);color:#fff;display:flex;align-items:center;justify-content:center;font:900 22px ui-rounded;box-shadow:0 4px 0 var(--grn-deep);flex:none}
+.fbt1{font:900 19px ui-rounded;color:var(--grn-deep)}
+.fbt2{font:700 11px ui-rounded;color:var(--ink2)}
+.expl{margin-top:12px;background:#F4FBF7;border:1.5px solid var(--grn-soft);border-radius:14px;padding:11px 13px;font:700 12px/1.5 ui-rounded;color:var(--ink)}
+.expl b{color:var(--grn-deep)}
+.xprow{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
+.xpchip{background:var(--gold-soft);border:1.5px solid var(--gold);color:var(--gold-deep);font:800 10.5px ui-rounded;border-radius:99px;padding:4px 10px}
+.xpchip.blu{background:var(--brand-soft);border-color:#B9D4FF;color:var(--brand-deep)}
+/* ---- summary pass ---- */
+.sumbg{position:absolute;inset:0;background:
+  radial-gradient(circle at 18% 12%, rgba(242,198,97,.5), transparent 32%),
+  radial-gradient(circle at 85% 22%, rgba(31,107,246,.16), transparent 36%),
+  radial-gradient(circle at 70% 85%, rgba(18,183,106,.14), transparent 34%), var(--paper)}
+.confetti{position:absolute;inset:0;pointer-events:none}
+.confetti i{position:absolute;width:9px;height:9px;border-radius:3px;opacity:.9}
+.sumin{position:relative;z-index:2;display:flex;flex-direction:column;height:100%}
+.sumhero{padding:34px 16px 6px;text-align:center}
+.sumhero img{width:92px;height:92px;filter:drop-shadow(0 6px 10px rgba(12,23,54,.25))}
+.sumt1{font:900 26px ui-rounded;color:var(--ink);letter-spacing:-.4px;margin-top:8px}
+.sumt2{font:800 12.5px ui-rounded;color:var(--ink2);margin-top:3px}
+.scorechips{display:flex;justify-content:center;gap:8px;margin-top:14px}
+.schip{background:#fff;border:2px solid var(--line);border-radius:14px;padding:7px 13px;text-align:center;box-shadow:0 3px 0 rgba(12,23,54,.07)}
+.schip .v{font:900 15px ui-rounded;color:var(--ink)}
+.schip .k{font:800 9px ui-rounded;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em}
+.ledger{margin:16px;background:#fff;border:2px solid var(--ink);border-radius:20px;padding:14px;box-shadow:0 5px 0 rgba(12,23,54,.9)}
+.lrow{display:flex;justify-content:space-between;align-items:center;padding:7px 2px;border-bottom:1.5px dashed var(--line);font:700 12px ui-rounded;color:var(--ink)}
+.lrow:last-child{border-bottom:0}
+.lrow .v{font:900 12.5px ui-rounded;color:var(--gold-deep)}
+.lrow .v.blu{color:var(--brand-deep)}
+.lrow .v.grn{color:var(--grn-deep)}
+.ltot{margin-top:8px;padding-top:10px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;font:900 14px ui-rounded;color:var(--ink)}
+
+/* ---- dashboard ---- */
+.dhd{flex:none;padding:8px 16px 10px;background:var(--paper);position:relative;z-index:2}
+.dhi{display:flex;align-items:center;gap:8px}
+.dhi .lg{font:900 19px ui-rounded;color:var(--ink)}
+.dhi .sp{flex:1}
+.dgreet{margin-top:8px}
+.dg1{font:900 21px ui-rounded;color:var(--ink);letter-spacing:-.3px}
+.dg2{font:700 11.5px ui-rounded;color:var(--ink2);margin-top:2px}
+.dscroll{flex:1;overflow:hidden;padding:2px 12px 12px;position:relative}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#fff;border:2px solid var(--line);border-radius:16px;padding:10px 12px;box-shadow:0 3px 0 rgba(12,23,54,.06)}
+.stat .v{font:900 19px ui-rounded;color:var(--ink)}
+.stat .v em{font-style:normal;font-size:11px;color:var(--ink3);font-weight:800}
+.stat .k{font:800 9.5px ui-rounded;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-top:1px}
+.stat .sub{font:700 10px ui-rounded;color:var(--ink2)}
+.stat.blu .v{color:var(--brand)}.stat.grn .v{color:var(--grn-deep)}.stat.gld .v{color:var(--gold-deep)}.stat.ink .v{color:var(--ink)}
+.sect{font:900 10.5px ui-rounded;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin:14px 2px 8px}
+.todaycard{background:#fff;border:2px solid var(--ink);border-radius:18px;padding:12px;box-shadow:0 4px 0 rgba(12,23,54,.9);display:flex;gap:10px;align-items:center}
+.tic{width:44px;height:44px;border-radius:14px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;border:1.5px solid #B9D4FF}
+.tt1{font:900 13.5px ui-rounded;color:var(--ink)}
+.tt2{font:700 10.5px ui-rounded;color:var(--ink2);margin-top:1px}
+.joinb{margin-left:auto;background:var(--grn);border:2px solid var(--ink);color:#fff;font:900 11.5px ui-rounded;border-radius:11px;padding:8px 13px;box-shadow:0 3px 0 var(--grn-deep);white-space:nowrap}
+.prow{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:9px 11px;box-shadow:0 2px 0 rgba(12,23,54,.05);margin-bottom:8px}
+.pdot{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;font:900 12px ui-rounded;color:#fff;flex:none}
+.pt1{font:800 12px ui-rounded;color:var(--ink)}
+.pt2{font:700 10px ui-rounded;color:var(--ink2)}
+.pgo{margin-left:auto;color:var(--ink3);font:900 13px ui-rounded}
+.ann{background:var(--gold-soft);border:1.5px solid var(--gold);border-radius:14px;padding:10px 12px;font:700 11.5px ui-rounded;color:#6B5400}
+.ann b{color:var(--ink)}
+.due{background:#fff;border:1.5px solid var(--line);border-left:4px solid var(--red);border-radius:12px;padding:9px 11px;margin-top:8px;display:flex;align-items:center;gap:8px}
+.due .dt1{font:800 11.5px ui-rounded;color:var(--ink)}
+.due .dt2{font:700 10px ui-rounded;color:var(--ink2)}
+.due .badge{margin-left:auto;background:var(--red-soft);color:var(--red);font:900 9.5px ui-rounded;border-radius:99px;padding:3px 8px}
+
+.tokcard{background:#171B33;border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:14px 16px;min-width:340px;flex:1;max-width:520px}
+.tokcard>b{font:900 11px ui-rounded;color:#F2C661;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:10px}
+.swrow{display:flex;gap:8px;flex-wrap:wrap}
+.sw{border-radius:9px;padding:7px 11px;font:800 10.5px ui-rounded;color:#fff}
+.sw2{background:#0B0E1E;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:6px 10px;font:700 10.5px ui-rounded;color:#A9B4D8}
+.flowarr2{align-self:center;font:900 30px ui-rounded;color:#4A5578;padding:0 2px}
+</style></head><body>
+<div class="topbar">
+<span class="dot" style="background:#FF5F57"></span><span class="dot" style="background:#FEBC2E"></span><span class="dot" style="background:#28C840"></span>
+<b>10x-design-board.sketch</b><span>artboard: the core loop · 390×844 · direction A (playful bold)</span>
+<span style="flex:1"></span><span class="f">⌘ zoom</span><span class="f">5 screens</span><span class="f">v1</span>
+</div>
+<div class="board">
+
+<div class="bsec"><div class="slabel"><span class="n">00</span><span class="t">Design tokens</span></div>
+<div class="sdesc">Every screen on this board reads from one token set. This is the contract the component kit will be built from.</div>
+<div class="srow" style="gap:14px">
+<div class="tokcard"><b>Color</b><div class="swrow">
+<span class="sw" style="background:#1F6BF6">brand #1F6BF6</span>
+<span class="sw" style="background:#0C1736">ink #0C1736</span>
+<span class="sw" style="background:#F2C661;color:#6B5400">gold #F2C661</span>
+<span class="sw" style="background:#12B76A">green #12B76A</span>
+<span class="sw" style="background:#FBF7F2;color:#4A5578;border:1px solid #EAE4DC">paper #FBF7F2</span>
+<span class="sw" style="background:#E4EFFF;color:#1557C8">brand-soft #E4EFFF</span></div></div>
+<div class="tokcard"><b>Type &amp; shape</b><div class="swrow" style="flex-direction:column;align-items:flex-start;gap:6px">
+<span class="sw2">ui-rounded · 900 display · −0.4px tracking</span>
+<span class="sw2">radius 14–24px · 2px ink outlines</span>
+<span class="sw2">shadow = hard offset 4–5px (pressable), soft 12–24px (cards)</span>
+<span class="sw2">8pt spacing grid · 44px+ touch targets</span></div></div>
+<div class="tokcard"><b>Mascot usage</b><div class="swrow" style="flex-direction:column;align-items:flex-start;gap:6px">
+<span class="sw2">warm-teacher → coach moments (home, hints)</span>
+<span class="sw2">celebrating → pass &amp; payout only</span>
+<span class="sw2">smug → pre-answer nudges</span>
+<span class="sw2">never decorative: absent on splash, exams, paywalls</span></div></div>
+</div></div>
+
+<div class="bsec"><div class="slabel"><span class="n">01</span><span class="t">The core loop — one floor, end to end</span></div>
+<div class="sdesc">Home → runner → feedback → payout. Every state the player touches in a 6-minute floor. These four frames are the product's heartbeat; everything else hangs off them.</div>
+<div class="srow">
+<div class="scard" id="S1">
+<div class="sname"><span class="id">S1</span>Roadmap home</div>
+<div class="ph"><div class="scr">
+<div class="island"></div>
+<div class="sbar"><span class="tm">9:41</span><span class="si"><svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="#0C1736"/><rect x="4.3" y="4.7" width="3" height="6.3" rx="1" fill="#0C1736"/><rect x="8.6" y="2.3" width="3" height="8.7" rx="1" fill="#0C1736"/><rect x="12.9" y="0" width="3" height="11" rx="1" fill="#0C1736" opacity=".35"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="0" width="22" height="12" rx="3.5" fill="none" stroke="#0C1736" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#0C1736"/><rect x="23" y="4" width="2" height="4" rx="1" fill="#0C1736" opacity=".4"/></svg></span></div>
+<div class="ah"><span class="lg">10x</span><span class="sp"></span>
+  <span class="hchip">🔥 12</span><span class="hchip gold">⚡ 240</span><span class="hchip">⬡ 45</span>
+  <span class="avatar">N</span></div>
+<div class="krow"><img class="kata" src="assets/kata/sprites/warm-teacher.png">
+  <div class="kbub">Floor 13. CSS Flexbox. Six minutes.<br>Then I will leave you alone.</div></div>
+<div class="map">
+  <svg viewBox="0 0 358 660" preserveAspectRatio="xMidYMin slice" style="width:100%;height:100%">
+    <path d="M179 640 C 70 610, 290 565, 179 515 C 70 465, 290 420, 179 370 C 70 320, 290 275, 179 225 C 70 175, 290 130, 179 80 C 100 48, 260 22, 179 -20"
+      fill="none" stroke="#E1DAF0" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 16"/>
+    <path d="M179 660 C 90 630, 250 590, 179 545 C 110 505, 230 470, 179 430"
+      fill="none" stroke="#F2C661" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 16" opacity=".9"/>
+  </svg>
+  <div class="node" style="left:50%;top:5.5%"><div class="ndot" style="background:#0C1736">👹</div><div class="nlab">BOSS · Grid Giant</div></div>
+  <div class="node" style="left:34%;top:19.5%"><div class="ndot locked">🔒</div><div class="nlab">Floor 15</div></div>
+  <div class="node" style="left:66%;top:33%"><div class="ndot locked">🔒</div><div class="nlab">Floor 14</div></div>
+  <div class="node cur" style="left:50%;top:50%">
+    <div class="ring"></div>
+    <div class="ndot">13</div><div class="nlab">CSS Flexbox</div><div class="nsub">10 questions · ≈6 min</div>
+  </div>
+  <div class="node" style="left:34%;top:66.5%"><div class="ndot gold">✓</div><div class="nlab">Floor 12</div></div>
+  <div class="node" style="left:66%;top:80%"><div class="ndot gold">✓</div><div class="nlab">Floor 11</div></div>
+  <div class="cta"><div class="ccard">
+    <div class="ct1">Floor 13 · Flexbox drills</div>
+    <div class="ct2">next on your path · 10 questions · <span style="color:var(--gold-deep);font-weight:900">+96⚡ +30⬡</span></div>
+    <div class="b3d">Start Floor 13</div>
+  </div></div>
+</div>
+<div class="bnav">
+  <div class="bi"><span class="icwrap"><span class="ic">🏠</span></span>Home</div>
+  <div class="bi"><span class="icwrap"><span class="ic">📋</span></span>Assignments</div>
+  <div class="bi on"><span class="icwrap"><span class="ic">🗺</span></span>Roadmap</div>
+  <div class="bi"><span class="icwrap"><span class="ic">🏆</span></span>League</div>
+  <div class="bi"><span class="icwrap"><span class="ic">📅</span></span>Events</div>
+</div>
+</div></div>
+<div class="snote">HUD chips tonal · map nodes: gold ✓ / locked 🔒 / current = brand + dashed spin ring · CTA card floats above path with 5px hard shadow · <span class="tok">tokens:</span> brand, gold, ink, paper</div></div>
+<div class="flowarr2">→</div>
+<div class="scard" id="S2">
+<div class="sname"><span class="id">S2</span>Floor runner · Q4/10</div>
+<div class="ph"><div class="scr">
+<div class="island"></div>
+<div class="sbar"><span class="tm">9:41</span><span class="si"></span></div>
+<div class="runhd">
+  <div class="runtop"><div class="xbtn">✕</div><div class="pbar"><i></i></div><div class="qcount">4/10</div></div>
+  <span class="flabel">FLOOR 13 · FLEXBOX DRILLS</span>
+  <div class="qcard"><div class="qtext">How do you center a child div horizontally <i>and</i> vertically?</div></div>
+</div>
+<div class="opts">
+  <div class="opt"><span class="let">A</span><span class="ot">Set <b>margin: auto</b> on the child</span></div>
+  <div class="opt sel"><span class="let">B</span><span class="ot">On the parent: <b>display: flex; justify-content: center; align-items: center</b></span></div>
+  <div class="opt"><span class="let">C</span><span class="ot">Set <b>text-align: center</b> on the child</span></div>
+  <div class="opt"><span class="let">D</span><span class="ot">Float the child left, then add padding</span></div>
+</div>
+<div class="runft">
+  <div class="hintrow"><span class="hintchip">💡 Hint −5⚡</span>
+    <span class="kmini"><img src="assets/kata/sprites/smug.png">Think parent, not child.</span></div>
+  <div class="b3d grn">Check</div>
+</div>
+</div></div>
+<div class="snote">chunky options with letter badges · selected = brand outline + soft fill + filled badge · hint chip shows cost up front (−5⚡, Δ2 no-surprises) · CHECK disabled until selection</div></div>
+<div class="flowarr2">→</div>
+<div class="scard" id="S3">
+<div class="sname"><span class="id">S3</span>Feedback · correct</div>
+<div class="ph"><div class="scr">
+<div class="island"></div>
+<div class="sbar"><span class="tm">9:41</span><span class="si"></span></div>
+<div class="runhd">
+  <div class="runtop"><div class="xbtn">✕</div><div class="pbar"><i></i></div><div class="qcount">4/10</div></div>
+  <span class="flabel">FLOOR 13 · FLEXBOX DRILLS</span>
+  <div class="qcard" style="opacity:.85"><div class="qtext" style="font-size:16px">How do you center a child div horizontally <i>and</i> vertically?</div></div>
+</div>
+<div class="opts" style="opacity:.55;filter:saturate(.5)">
+  <div class="opt"><span class="let">A</span><span class="ot">Set <b>margin: auto</b> on the child</span></div>
+  <div class="opt sel"><span class="let">B</span><span class="ot">On the parent: <b>display: flex; justify-content: center; align-items: center</b></span></div>
+</div>
+<div class="fbdim"></div>
+<div class="fbsheet">
+  <div class="fbrow"><div class="fbcheck">✓</div>
+    <div><div class="fbt1">Correct!</div><div class="fbt2">first try · +10⚡ banked</div></div>
+    <img class="kata" src="assets/kata/sprites/celebrating.png" style="margin-left:auto;width:52px;height:52px"></div>
+  <div class="expl"><b>Why B:</b> <b>justify-content</b> works on the parent's main axis, <b>align-items</b> on the cross axis. The child never needs to know it's centered — that's the parent's job.</div>
+  <div class="xprow"><span class="xpchip">+10⚡ first-correct</span><span class="xpchip blu">combo ×4 🔥</span><span class="xpchip">streak: secures today</span></div>
+  <div class="b3d grn" style="margin-top:14px">Continue</div>
+</div>
+</div></div>
+<div class="snote">green sheet over dimmed runner · ✓ coin with hard shadow · the WHY is one sentence, not a lecture · payout chips printed exactly (+10⚡ first-correct, combo ×4) · Kata celebrating, never on wrong answers</div></div>
+<div class="flowarr2">→</div>
+<div class="scard" id="S4">
+<div class="sname"><span class="id">S4</span>Floor summary · pass</div>
+<div class="ph"><div class="scr">
+<div class="sumbg"></div>
+<div class="confetti">
+  <i style="left:12%;top:10%;background:#F2C661;transform:rotate(20deg)"></i>
+  <i style="left:84%;top:14%;background:#1F6BF6;transform:rotate(-15deg)"></i>
+  <i style="left:70%;top:6%;background:#12B76A;border-radius:50%"></i>
+  <i style="left:28%;top:5%;background:#E5484D;border-radius:50%"></i>
+  <i style="left:48%;top:16%;background:#8B5CF6;transform:rotate(40deg)"></i>
+  <i style="left:90%;top:42%;background:#F2C661;border-radius:50%"></i>
+  <i style="left:6%;top:38%;background:#12B76A;transform:rotate(70deg)"></i>
+</div>
+<div class="island"></div>
+<div class="sbar" style="position:relative;z-index:2"><span class="tm">9:41</span><span class="si"></span></div>
+<div class="sumin">
+  <div class="sumhero">
+    <img src="assets/kata/sprites/celebrating.png">
+    <div class="sumt1">Floor 13 cleared!</div>
+    <div class="sumt2">CSS Flexbox drills · flexbox is yours now</div>
+    <div class="scorechips">
+      <div class="schip"><div class="v">9/10</div><div class="k">correct</div></div>
+      <div class="schip"><div class="v">5:42</div><div class="k">time</div></div>
+      <div class="schip"><div class="v">×4</div><div class="k">best combo</div></div>
+    </div>
+  </div>
+  <div class="ledger">
+    <div class="lrow"><span>9 first-correct items</span><span class="v">+86⚡</span></div>
+    <div class="lrow"><span>Combo bonus ×4 peak</span><span class="v">+10⚡</span></div>
+    <div class="lrow"><span>Floor pass ≥ 8/10</span><span class="v blu">+30⬡</span></div>
+    <div class="lrow"><span>🔥 Streak secured — day 12 continues</span><span class="v grn">✓</span></div>
+    <div class="lrow"><span>League points this week</span><span class="v">+12</span></div>
+    <div class="lrow"><span>1 mistake → your inbox (pays ⬡ when cleared)</span><span class="v">+2⬡ later</span></div>
+    <div class="ltot"><span>Total</span><span class="v">+96⚡ · +30⬡</span></div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="padding:0 16px 26px"><div class="b3d">Collect</div></div>
+</div>
+</div></div>
+<div class="snote">celebration gradient + 7 confetti atoms · score chips row · <b>the ledger card is the law</b>: every number printed, every number paid — streak-secured row is the emotional payload · Collect = brand</div></div>
+</div></div>
+
+<div class="bsec"><div class="slabel"><span class="n">02</span><span class="t">The school side — same brand, calmer register</span></div>
+<div class="sdesc">The classroom dashboard proves the two-design-systems law: same tokens, quieter volume. No map, no chests — just "how am I doing in school" in one glance.</div>
+<div class="srow">
+<div class="scard" id="S5">
+<div class="sname"><span class="id">S5</span>Classroom dashboard</div>
+<div class="ph"><div class="scr">
+<div class="island"></div>
+<div class="sbar"><span class="tm">9:41</span><span class="si"></span></div>
+<div class="dhd">
+  <div class="dhi"><span class="lg">10x</span><span class="sp"></span>
+    <span class="hchip">🔥 12</span><span class="hchip gold">⚡ 240</span><span class="hchip">⬡ 45</span>
+    <span class="avatar">N</span></div>
+  <div class="dgreet"><div class="dg1">Welcome, Nino</div><div class="dg2">Tuesday, 4 June · your learning at a glance</div></div>
+</div>
+<div class="dscroll">
+  <div class="statgrid">
+    <div class="stat blu"><div class="v">87 <em>vs 81 group</em></div><div class="k">Grade</div></div>
+    <div class="stat grn"><div class="v">92%</div><div class="k">Attendance · 9 graded 1 pending</div></div>
+    <div class="stat gld"><div class="v">🔥 12</div><div class="k">Day streak</div></div>
+    <div class="stat ink"><div class="v">26</div><div class="k">Active days · 30d</div></div>
+  </div>
+  <div class="sect">Today</div>
+  <div class="todaycard"><div class="tic">🗓</div>
+    <div><div class="tt1">CSS Flexbox · 12:00–13:30</div><div class="tt2">Python foundations · room 204 · Nino B.</div></div>
+    <div class="joinb">Join Zoom</div></div>
+  <div class="sect">Your programs</div>
+  <div class="prow"><div class="pdot" style="background:#1F6BF6">Py</div>
+    <div><div class="pt1">Python foundations</div><div class="pt2">COHORT-4 · modular</div></div><div class="pgo">›</div></div>
+  <div class="prow"><div class="pdot" style="background:#12B76A">Ag</div>
+    <div><div class="pt1">Agile basics</div><div class="pt2">short course · week 2</div></div><div class="pgo">›</div></div>
+  <div class="sect">Pinned</div>
+  <div class="ann">📌 <b>“Bring laptops Thursday”</b> — Python foundations · Nino B. · 2d ago</div>
+  <div class="due"><span style="font-size:16px">⏰</span>
+    <div><div class="dt1">flexbox-lab repo · due in 6h</div><div class="dt2">PY-101 · submit via GitHub</div></div>
+    <span class="badge">&lt;24h</span></div>
+</div>
+<div class="bnav">
+  <div class="bi on"><span class="icwrap"><span class="ic">🏠</span></span>Home</div>
+  <div class="bi"><span class="icwrap"><span class="ic">📋</span></span>Assignments</div>
+  <div class="bi"><span class="icwrap"><span class="ic">🗺</span></span>Roadmap</div>
+  <div class="bi"><span class="icwrap"><span class="ic">🏆</span></span>League</div>
+  <div class="bi"><span class="icwrap"><span class="ic">📅</span></span>Events</div>
+</div>
+</div></div>
+<div class="snote">stat tiles color-coded by meaning (grade=brand, attendance=green, streak=gold, activity=ink) · Today card = ink border + hard shadow, Join Zoom always visible · due &lt;24h = red left-rail + badge · programs as tappable rows, not tiles</div></div>
+</div></div>
+
+</div>
+</body></html>
