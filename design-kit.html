@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10x UI Kit — hero screens (kit grade)</title><style>
+/* ===== 10x kit tokens (Duolingo-kit language, our brand) ===== */
+:root{
+  --green:#58CC02; --green-d:#46A302; --green-line:#58A700;
+  --blue:#1CB0F6; --blue-d:#1899D6;
+  --gold:#FFC800; --orange:#FF9600; --red:#FF4B4B;
+  --eel:#4B4B4B; --hare:#777; --wolf:#AFAFAF; --line:#E5E5E5; --polar:#F7F7F7; --swan:#FFF;
+}
+*{box-sizing:border-box;margin:0;-webkit-font-smoothing:antialiased}
+body{background:#E9E9E9;font-family:"Nunito",ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--eel)}
+header.page{background:#0C1736;color:#fff;padding:26px 0 22px}
+header.page .in{max-width:1500px;margin:0 auto;padding:0 26px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+header.page h1{font:900 24px/1.1 ui-rounded,"Nunito",system-ui;letter-spacing:-.3px}
+header.page p{color:#A9B4D8;font:700 12px/1.5 ui-rounded;max-width:70ch}
+header.page .k{font:900 10px ui-rounded;letter-spacing:.18em;color:#FFC800;text-transform:uppercase;margin-bottom:6px}
+main{max-width:1500px;margin:0 auto;padding:30px 26px 90px}
+.set{margin-bottom:54px}
+.set>.cap{font:900 11px ui-rounded;letter-spacing:.14em;color:#8A93AC;text-transform:uppercase;margin-bottom:14px}
+.srow{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+.ph{width:390px;height:844px;background:var(--swan);border-radius:26px;overflow:hidden;position:relative;
+  box-shadow:0 2px 6px rgba(0,0,0,.08),0 24px 48px rgba(0,0,0,.10);display:flex;flex-direction:column;border:1px solid #DDD}
+.sname{position:absolute;left:-2px;top:-2px;background:#0C1736;color:#FFC800;font:900 10px ui-rounded;padding:4px 10px;border-radius:0 0 12px 0;z-index:10;letter-spacing:.08em}
+
+/* ===== kit atoms ===== */
+.sb{display:flex;justify-content:space-between;align-items:center;padding:18px 22px 0;flex:none}
+.sb .t{font:900 13px ui-rounded;color:var(--eel)}
+.sb .r{display:flex;gap:6px;align-items:center;color:var(--eel);font-size:10px;font-weight:800}
+.hud{display:flex;gap:8px;align-items:center;justify-content:center;padding:12px 14px 6px;flex:none}
+.hud .st{display:flex;align-items:center;gap:5px;font:900 14px ui-rounded}
+.streak{color:var(--orange)} .gems{color:var(--blue)} .coins{color:#B88A00}
+/* chunky button */
+.btn{display:flex;align-items:center;justify-content:center;background:var(--green);color:#fff;border:none;
+  border-radius:12px;border-bottom:5px solid var(--green-line);font:900 13px/1 ui-rounded;letter-spacing:.08em;
+  text-transform:uppercase;padding:15px 18px;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.btn:active{transform:translateY(3px);border-bottom-width:2px}
+.btn.blue{background:var(--blue);border-bottom-color:var(--blue-d)}
+.btn.ghost{background:#fff;color:var(--blue);border:2px solid var(--line);border-bottom-width:5px}
+.btn.dis{background:#E5E5E5;color:#AFAFAF;border-bottom-color:#CFCFCF}
+/* nav */
+.nav{flex:none;display:flex;border-top:2px solid var(--line);background:#fff;padding:10px 4px 18px}
+.nav i{flex:1;text-align:center;font-style:normal;font-size:21px;opacity:.45;filter:grayscale(.4)}
+.nav i.on{opacity:1;filter:none;position:relative}
+.nav i.on::after{content:"";position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);width:34px;height:4px;border-radius:99px;background:var(--green)}
+/* path nodes */
+.nodep{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
+.nod{width:64px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;
+  color:#fff;position:relative;box-shadow:0 6px 0 var(--nd, #CECECE)}
+.nod.done{background:var(--gold);--nd:#E0A800}
+.nod.locked{background:#E5E5E5;--nd:#CECECE;color:#AFAFAF}
+.nod.cur{background:var(--green);--nd:var(--green-line)}
+.nod.cur::before{content:"";position:absolute;inset:-11px;border-radius:50%;border:4px solid #B8F28B;animation:pul 1.6s ease-in-out infinite}
+@keyframes pul{0%,100%{transform:scale(.94);opacity:.7}50%{transform:scale(1.05);opacity:1}}
+.nod.boss{background:#CE82FF;--nd:#A34FD8}
+.nl{position:absolute;top:60px;font:900 12px ui-rounded;color:var(--eel);background:#fff;border:2px solid var(--line);
+  border-radius:10px;padding:3px 9px;white-space:nowrap}
+.startbub{position:absolute;top:-56px;left:50%;transform:translateX(-50%);background:#fff;border:2px solid var(--line);
+  border-radius:12px;padding:7px 12px;font:900 12px ui-rounded;color:var(--green-deep,#46A302);color:var(--green-d);white-space:nowrap}
+.startbub::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:#fff;border-right:2px solid var(--line);border-bottom:2px solid var(--line)}
+/* question option cards */
+.optc{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);border-bottom-width:5px;border-radius:14px;padding:13px 14px;font:800 13px/1.4 ui-rounded;color:var(--eel)}
+.optc .k{width:26px;height:26px;border-radius:8px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font:900 11px ui-rounded;color:var(--hare);flex:none}
+.optc.sel{border-color:var(--blue);background:#EAF6FE;color:#0369A1}
+.optc.sel .k{border-color:var(--blue);background:var(--blue);color:#fff}
+/* feedback bars */
+.fbok{background:#D7FFB8;color:#46A302;border-radius:0}
+.fbhd{display:flex;align-items:center;gap:10px}
+.fbhd .ck{width:40px;height:40px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900}
+.fbhd b{font:900 18px ui-rounded;color:#46A302}
+/* kata bubble */
+.krow{display:flex;align-items:flex-end;gap:4px;padding:6px 16px 0}
+.krow img{width:74px;height:74px;flex:none}
+.kb{background:#fff;border:2px solid var(--line);border-radius:14px 14px 14px 3px;padding:10px 13px;font:800 12.5px/1.45 ui-rounded;color:var(--eel);position:relative;box-shadow:0 2px 4px rgba(0,0,0,.05)}
+.kb::before{content:"";position:absolute;left:-8px;bottom:14px;width:13px;height:13px;background:#fff;border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:rotate(45deg)}
+/* misc */
+.secttl{font:900 16px ui-rounded;color:var(--eel);padding:14px 16px 8px}
+.cardx{background:#fff;border:2px solid var(--line);border-radius:14px;box-shadow:0 2px 0 rgba(0,0,0,.03)}
+</style></head><body>
+<header class="page"><div class="in"><div><div class="k">10x LMS · UI kit · hero set v1</div>
+<h1>Hero screens — kit grade</h1>
+<p>Duolingo-kit visual language, 10x content. Flat Polar white, feather-green chunky CTAs with 4px lips, 3D ellipse nodes on the dotted wobble, Kata where Duo would be. Five frames: welcome → path → question → correct → floor complete.</p></div>
+<div style="font:800 11px ui-rounded;color:#8FA0CC">tokens: #58CC02 · #1CB0F6 · #FFC800 · #FF9600 · #FF4B4B · #4B4B4B</div></div></header>
+<main>
+<div class="set"><div class="cap">The core loop — five frames, kit grade</div><div class="srow"><div class="ph"><div class="sname">K1 · Welcome</div>
+<div class="sb"><span class="t">9:41</span><span class="r">5G ▮▮▮▮ 84%</span></div>
+<div style="flex:1;display:flex;flex-direction:column;padding:0 22px">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+    <img src="assets/kata/sprites/hype.png" style="width:150px;height:150px;margin-bottom:6px">
+    <div style="font:900 24px/1.2 ui-rounded;color:#4B4B4B;max-width:300px">The free, fun way to learn your trade</div>
+    <div style="font:700 13px/1.5 ui-rounded;color:#777;margin-top:8px;max-width:290px">Floors, streaks and real projects — six minutes a day, your pace, your school behind you.</div>
+  </div>
+  <div style="padding-bottom:34px;display:flex;flex-direction:column;gap:10px">
+    <div class="btn">Get started</div>
+    <div class="btn ghost">I already have an account</div>
+    <div style="text-align:center;font:700 11px ui-rounded;color:#AFAFAF;margin-top:4px">school-given credentials work right here</div>
+  </div>
+</div></div><div class="ph"><div class="sname">K2 · Path home</div>
+<div class="sb"><span class="t">9:41</span><span class="r">5G ▮▮▮▮ 84%</span></div>
+<div class="hud">
+  <span class="st streak">🔥 <b>12</b></span>
+  <span class="st gems">💎 <b>240</b></span>
+  <span class="st coins">🪙 <b>45</b></span>
+  <span style="flex:1"></span>
+  <span style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#1CB0F6);color:#fff;display:flex;align-items:center;justify-content:center;font:900 13px ui-rounded;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.15)">N</span>
+</div>
+<div class="krow"><img src="assets/kata/sprites/warm-teacher.png">
+  <div class="kb">Floor 13. CSS Flexbox. Six minutes.<br>Then I will leave you alone.</div></div>
+<div style="flex:1;position:relative;overflow:hidden">
+  <svg viewBox="0 0 390 620" style="position:absolute;inset:0;width:100%;height:100%">
+    <path d="M195 610 C 90 565, 300 520, 195 470 C 90 420, 300 375, 195 325 C 90 275, 300 230, 195 180 C 110 140, 270 105, 195 60"
+      fill="none" stroke="#E5E5E5" stroke-width="6" stroke-linecap="round" stroke-dasharray="0.5 16"/>
+  </svg>
+  <div class="nodep" style="left:50%;top:97%"><div class="nod done">✓</div><div class="nl">Floor 11</div></div>
+  <div class="nodep" style="left:33%;top:82%"><div class="nod done">✓</div><div class="nl">Floor 12</div></div>
+  <div class="nodep" style="left:50%;top:57%">
+    <div class="startbub">START ▸</div>
+    <div class="nod cur">💪</div><div class="nl" style="background:#0C1736;color:#fff;border-color:#0C1736">CSS Flexbox</div>
+  </div>
+  <div class="nodep" style="left:67%;top:40%"><div class="nod locked">🔒</div><div class="nl">Floor 14</div></div>
+  <div class="nodep" style="left:33%;top:25%"><div class="nod locked">🔒</div><div class="nl">Floor 15</div></div>
+  <div class="nodep" style="left:50%;top:8%"><div class="nod boss">👹</div><div class="nl">BOSS · Grid Giant</div></div>
+</div>
+<div class="nav"><i>🏠</i><i>📋</i><i class="on">🗺</i><i>🏆</i><i>📅</i></div>
+</div><div class="ph"><div class="sname">K3 · Question 4/10</div>
+<div class="sb"><span class="t">9:41</span><span class="r">5G ▮▮▮▮ 84%</span></div>
+<div style="padding:8px 20px 0;display:flex;align-items:center;gap:12px">
+  <span style="font:900 17px ui-rounded;color:#AFAFAF">✕</span>
+  <div style="flex:1;height:16px;border-radius:99px;background:#E5E5E5;overflow:hidden"><i style="display:block;height:100%;width:40%;background:#58CC02;border-radius:99px"></i></div>
+  <span style="font:900 13px ui-rounded;color:#777">4/10</span>
+</div>
+<div style="padding:14px 20px 0">
+  <div style="font:900 11px ui-rounded;letter-spacing:.12em;color:#AFAFAF;text-transform:uppercase">Floor 13 · Flexbox drills</div>
+  <div style="font:900 19px/1.3 ui-rounded;color:#4B4B4B;margin-top:8px">How do you center a child div horizontally <i>and</i> vertically?</div>
+</div>
+<div style="padding:16px 20px 0;display:flex;flex-direction:column;gap:12px">
+  <div class="optc"><span class="k">A</span>Set <b>margin: auto</b> on the child</div>
+  <div class="optc sel"><span class="k">B</span>On the parent: <b>display: flex; justify-content: center; align-items: center</b></div>
+  <div class="optc"><span class="k">C</span>Set <b>text-align: center</b> on the child</div>
+  <div class="optc"><span class="k">D</span>Float the child left, then add padding</div>
+</div>
+<div style="flex:1"></div>
+<div class="krow" style="padding-bottom:4px"><img src="assets/kata/sprites/smug.png" style="width:52px;height:52px">
+  <div class="kb" style="font-size:11.5px">Think parent, not child.</div>
+  <span style="margin-left:auto;font:800 11px ui-rounded;color:#B88A00;background:#FFF4CE;border:2px solid #FFC800;border-radius:99px;padding:4px 10px">💡 Hint −5⚡</span></div>
+<div style="padding:10px 20px 30px;border-top:2px solid #F0F0F0"><div class="btn">Check</div></div>
+</div><div class="ph"><div class="sname">K4 · Correct</div>
+<div class="sb"><span class="t">9:41</span><span class="r">5G ▮▮▮▮ 84%</span></div>
+<div style="padding:8px 20px 0;display:flex;align-items:center;gap:12px;opacity:.55">
+  <span style="font:900 17px ui-rounded;color:#AFAFAF">✕</span>
+  <div style="flex:1;height:16px;border-radius:99px;background:#E5E5E5;overflow:hidden"><i style="display:block;height:100%;width:40%;background:#58CC02;border-radius:99px"></i></div>
+  <span style="font:900 13px ui-rounded;color:#777">4/10</span>
+</div>
+<div style="padding:14px 20px 0;opacity:.5">
+  <div style="font:900 19px/1.3 ui-rounded;color:#4B4B4B">How do you center a child div horizontally <i>and</i> vertically?</div>
+  <div class="optc sel" style="margin-top:14px"><span class="k">B</span>On the parent: <b>display: flex; justify-content: center; align-items: center</b></div>
+</div>
+<div style="flex:1"></div>
+<div style="background:#D7FFB8;padding:16px 20px 30px">
+  <div class="fbhd"><div class="ck">✓</div><div><b>Correct!</b><div style="font:800 11px ui-rounded;color:#46A302;margin-top:1px">first try · +10⚡ banked · combo ×4 🔥</div></div>
+  <img src="assets/kata/sprites/celebrating.png" style="width:60px;height:60px;margin-left:auto"></div>
+  <div style="background:rgba(255,255,255,.7);border-radius:12px;padding:10px 12px;margin-top:10px;font:700 12px/1.5 ui-rounded;color:#4B4B4B">
+    <b style="color:#46A302">Why:</b> <b>justify-content</b> works on the parent's main axis, <b>align-items</b> on the cross axis. The child never needs to know it's centered.</div>
+  <div class="btn" style="margin-top:12px">Continue</div>
+</div>
+</div><div class="ph"><div class="sname">K5 · Floor complete</div>
+<div class="sb"><span class="t">9:41</span><span class="r">5G ▮▮▮▮ 84%</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:14px 22px 0;text-align:center">
+  <img src="assets/kata/sprites/celebrating.png" style="width:120px;height:120px">
+  <div style="font:900 26px ui-rounded;color:#4B4B4B;letter-spacing:-.3px;margin-top:6px">Floor 13 cleared!</div>
+  <div style="font:700 12.5px ui-rounded;color:#777;margin-top:4px">CSS Flexbox drills · flexbox is yours now</div>
+  <div style="display:flex;gap:10px;margin-top:18px;width:100%">
+    <div style="flex:1;border:2px solid #E5E5E5;border-radius:12px;padding:10px 6px"><div style="font:900 16px ui-rounded;color:#4B4B4B">9/10</div><div style="font:800 9.5px ui-rounded;color:#AFAFAF;letter-spacing:.08em">CORRECT</div></div>
+    <div style="flex:1;border:2px solid #E5E5E5;border-radius:12px;padding:10px 6px"><div style="font:900 16px ui-rounded;color:#4B4B4B">5:42</div><div style="font:800 9.5px ui-rounded;color:#AFAFAF;letter-spacing:.08em">TIME</div></div>
+    <div style="flex:1;border:2px solid #E5E5E5;border-radius:12px;padding:10px 6px"><div style="font:900 16px ui-rounded;color:#4B4B4B">×4</div><div style="font:800 9.5px ui-rounded;color:#AFAFAF;letter-spacing:.08em">BEST COMBO</div></div>
+  </div>
+  <div class="cardx" style="width:100%;margin-top:14px;text-align:left;padding:6px 14px">
+    <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:2px solid #F0F0F0;font:800 12px ui-rounded;color:#4B4B4B"><span>First-correct items ×9</span><b style="color:#B88A00">+86⚡</b></div>
+    <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:2px solid #F0F0F0;font:800 12px ui-rounded;color:#4B4B4B"><span>Combo peak ×4</span><b style="color:#B88A00">+10⚡</b></div>
+    <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:2px solid #F0F0F0;font:800 12px ui-rounded;color:#4B4B4B"><span>Floor pass ≥ 8/10</span><b style="color:#1899D6">+30⬡</b></div>
+    <div style="display:flex;justify-content:space-between;padding:9px 0;font:800 12px ui-rounded;color:#4B4B4B"><span>🔥 Streak secured — day 12</span><b style="color:#46A302">✓</b></div>
+  </div>
+  <div style="margin-top:12px;font:800 11.5px ui-rounded;color:#777">Total <b style="color:#B88A00">+96⚡ · +30⬡</b> · league +12 pts · 1 mistake → inbox</div>
+</div>
+<div style="padding:12px 20px 30px"><div class="btn">Collect</div></div>
+</div></div></div>
+</main>
+</body></html>
