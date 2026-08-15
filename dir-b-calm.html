@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direction B — Calm Studio</title>
+<style>
+  :root{
+    --bg:#FAFAF7;
+    --ink:#101636;
+    --slate:#5A6478;
+    --accent:#1F6BF6;
+    --moss:#17804F;
+    --ember:#E46A2C;
+    --hairline:#E7E5E0;
+    --shadow-s: 0 1px 2px rgba(16,22,54,.05);
+    --shadow-l: 0 1px 2px rgba(16,22,54,.05), 0 8px 24px rgba(16,22,54,.06);
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ -webkit-font-smoothing:antialiased; }
+  body{
+    background:var(--bg);
+    font-family:var(--sans);
+    color:var(--ink);
+    padding:64px 48px 80px;
+  }
+
+  /* ---------- Page header ---------- */
+  .page-head{ max-width:1280px; margin:0 auto 48px; }
+  .eyebrow{
+    font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--slate); font-weight:600; margin-bottom:10px;
+  }
+  .page-head h1{
+    font-family:var(--serif);
+    font-size:40px; font-weight:700; letter-spacing:-.02em; line-height:1.1;
+    margin-bottom:18px;
+  }
+  .page-head h1 em{ font-style:italic; color:var(--accent); }
+  .rationale{ list-style:none; display:flex; gap:40px; flex-wrap:wrap; }
+  .rationale li{
+    max-width:330px; font-size:13px; line-height:1.6; color:var(--slate);
+    padding-left:14px; border-left:2px solid var(--hairline);
+  }
+  .rationale li strong{
+    display:block; color:var(--ink); font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; font-weight:700; margin-bottom:4px;
+  }
+
+  /* ---------- Screen rail ---------- */
+  .rail{
+    max-width:1280px; margin:0 auto;
+    display:flex; gap:44px; justify-content:center; align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .screen-block{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .screen-label{
+    font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--slate); font-weight:600;
+  }
+
+  /* ---------- Phone frame ---------- */
+  .phone{
+    width:390px; height:844px; flex:none;
+    background:#10131f;
+    border-radius:46px;
+    padding:9px;
+    box-shadow: 0 1px 2px rgba(16,22,54,.08), 0 24px 64px rgba(16,22,54,.14);
+  }
+  .screen{
+    position:relative;
+    width:100%; height:100%;
+    background:var(--bg);
+    border-radius:40px;
+    overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .notch{
+    position:absolute; top:9px; left:50%; transform:translateX(-50%);
+    width:104px; height:26px; background:#10131f; border-radius:14px; z-index:20;
+  }
+  .statusbar{
+    height:46px; flex:none; display:flex; align-items:flex-end; justify-content:space-between;
+    padding:0 30px 4px; font-size:12px; font-weight:600; color:var(--ink); z-index:10;
+  }
+  .statusbar .icons{ display:flex; gap:5px; align-items:center; color:var(--ink); }
+
+  .content{ flex:1; overflow:hidden; display:flex; flex-direction:column; padding:4px 24px 0; }
+
+  /* ---------- Shared bits ---------- */
+  .smallcaps{
+    font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--slate); font-weight:700;
+  }
+  .btn-primary{
+    display:block; width:100%; padding:14px 0; border:none; border-radius:14px;
+    background:var(--accent); color:#fff; font-size:14px; font-weight:600;
+    letter-spacing:.01em; font-family:var(--sans); cursor:pointer;
+    box-shadow: 0 1px 2px rgba(31,107,246,.3), 0 6px 16px rgba(31,107,246,.22);
+  }
+  .btn-primary:disabled{
+    background:#F0EFEB; color:#A7ACB8; box-shadow:none; cursor:default;
+  }
+  .kata-line{
+    display:flex; align-items:center; gap:8px;
+    font-size:12px; font-style:italic; color:var(--slate); line-height:1.45;
+  }
+  .kata-glyph{
+    flex:none; width:30px; height:30px; border-radius:50%;
+    background:#fff; border:1px solid var(--hairline);
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px; box-shadow:var(--shadow-s);
+    filter:grayscale(1);
+  }
+
+  /* ---------- Bottom nav ---------- */
+  .bottom-nav{
+    flex:none; height:72px; border-top:1px solid var(--hairline);
+    background:rgba(250,250,247,.92);
+    display:flex; align-items:flex-start; justify-content:space-around;
+    padding:10px 6px 0;
+  }
+  .nav-item{
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    font-size:10px; color:var(--slate); font-weight:500; width:58px;
+    position:relative; padding-bottom:12px;
+  }
+  .nav-item .nicon{ font-size:17px; filter:grayscale(.6); opacity:.75; margin-bottom:1px; }
+  .nav-item.active{ color:var(--ink); font-weight:600; }
+  .nav-item.active .nicon{ filter:none; opacity:1; }
+  .nav-item.active::after{
+    content:''; position:absolute; bottom:4px; left:50%; transform:translateX(-50%);
+    width:4px; height:4px; border-radius:50%; background:var(--accent);
+  }
+
+  /* ============================================================
+     SCREEN 1 — ROADMAP HOME
+     ============================================================ */
+  .hud{
+    display:flex; gap:8px; margin:8px 0 18px;
+  }
+  .hud-chip{
+    display:flex; align-items:center; gap:5px;
+    font-size:11px; font-weight:600; color:var(--slate);
+    padding:5px 10px; border:1px solid var(--hairline); border-radius:999px;
+    background:#fff;
+  }
+  .hud-chip .hv{ color:var(--ink); font-weight:700; }
+  .hud-chip .ember{ color:var(--ember); }
+  .hud-chip .bolt{ color:var(--accent); }
+
+  .greet{ margin-bottom:20px; }
+  .greet h2{
+    font-family:var(--serif); font-size:26px; font-weight:700;
+    letter-spacing:-.015em; line-height:1.15; margin-top:6px;
+  }
+  .greet p{ font-size:13px; color:var(--slate); margin-top:5px; }
+
+  .path{ position:relative; padding:2px 0 6px 4px; }
+  .path::before{
+    content:''; position:absolute; left:19px; top:8px; bottom:20px;
+    width:1px; background:var(--hairline);
+  }
+  .node-row{
+    position:relative; display:flex; align-items:center; gap:14px;
+    padding:9px 0;
+  }
+  .node{
+    flex:none; width:32px; height:32px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:600;
+    background:#fff; border:1px solid var(--hairline); color:var(--slate);
+    position:relative; z-index:2;
+  }
+  .node.done{ background:var(--moss); border-color:var(--moss); color:#fff; font-size:13px; }
+  .node.current{
+    background:var(--accent); border-color:var(--accent); color:#fff;
+    box-shadow: 0 0 0 5px rgba(31,107,246,.14), 0 0 0 9px rgba(31,107,246,.06);
+  }
+  .node-label{ font-size:13px; color:var(--slate); font-weight:500; }
+  .node-row.done .node-label{ color:var(--ink); }
+  .node-row.current .node-label{ color:var(--ink); font-weight:600; }
+  .node-meta{ font-size:11px; color:var(--slate); margin-left:auto; }
+
+  .upnext{
+    margin-top:16px; background:#fff; border:1px solid var(--hairline);
+    border-radius:16px; padding:18px; box-shadow:var(--shadow-l);
+  }
+  .upnext h3{
+    font-family:var(--serif); font-size:18px; font-weight:700;
+    letter-spacing:-.01em; margin:6px 0 4px;
+  }
+  .upnext .meta{ font-size:12px; color:var(--slate); margin-bottom:14px; }
+  .upnext .kata-line{ margin-top:12px; }
+
+  /* ============================================================
+     SCREEN 2 — FLOOR RUNNER
+     ============================================================ */
+  .progress-hairline{
+    height:2px; background:var(--hairline); border-radius:2px; margin:10px 0 4px;
+    position:relative;
+  }
+  .progress-hairline .fill{
+    position:absolute; left:0; top:0; bottom:0; width:40%;
+    background:var(--accent); border-radius:2px;
+  }
+  .runner-top{
+    display:flex; justify-content:space-between; align-items:baseline; margin-bottom:22px;
+  }
+  .runner-count{ font-size:12px; color:var(--slate); font-weight:600; }
+  .runner-count b{ color:var(--ink); font-family:var(--serif); font-size:15px; }
+
+  .question{
+    font-family:var(--serif); font-size:25px; font-weight:700;
+    letter-spacing:-.015em; line-height:1.28; margin:10px 0 24px;
+  }
+
+  .answers{ display:flex; flex-direction:column; gap:10px; }
+  .answer{
+    display:flex; align-items:center; gap:12px;
+    padding:14px 16px; border:1px solid var(--hairline); border-radius:14px;
+    background:#fff; font-size:13px; line-height:1.4; color:var(--ink);
+    box-shadow:var(--shadow-s);
+  }
+  .answer .radio{
+    flex:none; width:18px; height:18px; border-radius:50%;
+    border:1.5px solid #C9CCD6; position:relative;
+  }
+  .answer.selected{
+    border-color:var(--accent);
+    background:rgba(31,107,246,.045);
+    box-shadow:var(--shadow-s);
+  }
+  .answer.selected .radio{ border-color:var(--accent); }
+  .answer.selected .radio::after{
+    content:''; position:absolute; inset:3.5px; border-radius:50%; background:var(--accent);
+  }
+  .answer .a-key{
+    flex:none; width:20px; font-size:11px; font-weight:700; color:var(--slate);
+    letter-spacing:.06em;
+  }
+  .answer.selected .a-key{ color:var(--accent); }
+  .answer code{
+    font-family:'SF Mono', Menlo, Consolas, monospace; font-size:11.5px;
+    background:#F4F3EF; padding:1px 5px; border-radius:5px; color:var(--ink);
+  }
+
+  .hint-row{ margin:18px 0 0; }
+  .hint-link{
+    font-size:12px; color:var(--accent); font-weight:600; text-decoration:none;
+    border-bottom:1px solid rgba(31,107,246,.3); padding-bottom:1px;
+  }
+  .hint-cost{ font-weight:500; color:var(--slate); }
+
+  .runner-kata{ margin-top:16px; }
+  .runner-foot{ margin-top:auto; padding:16px 0 14px; }
+  .foot-states{
+    margin-top:12px; padding-top:12px; border-top:1px solid var(--hairline);
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .foot-states .fs-label{ font-size:10.5px; color:var(--slate); line-height:1.4; }
+  .btn-mini-disabled{
+    flex:none; padding:7px 18px; border:none; border-radius:10px;
+    background:#F0EFEB; color:#A7ACB8; font-size:11.5px; font-weight:600;
+    font-family:var(--sans); cursor:default;
+  }
+
+  /* ============================================================
+     SCREEN 3 — CLASSROOM DASHBOARD
+     ============================================================ */
+  .dash-head{ margin:10px 0 18px; }
+  .dash-head h2{
+    font-family:var(--serif); font-size:27px; font-weight:700;
+    letter-spacing:-.015em; margin-top:6px;
+  }
+  .dash-head .date{ font-size:12px; color:var(--slate); margin-top:3px; }
+
+  .stat-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px;
+  }
+  .stat{
+    background:#fff; border:1px solid var(--hairline); border-radius:14px;
+    padding:13px 14px; box-shadow:var(--shadow-s);
+  }
+  .stat .sv{
+    font-family:var(--serif); font-size:24px; font-weight:700; letter-spacing:-.01em;
+    line-height:1; margin:5px 0 3px;
+  }
+  .stat .sv .unit{ font-size:13px; color:var(--slate); font-family:var(--sans); font-weight:500; }
+  .stat .ssub{ font-size:10.5px; color:var(--slate); }
+  .stat .sv.blue{ color:var(--accent); }
+  .stat .sv.ember{ color:var(--ember); }
+  .stat .sv.moss{ color:var(--moss); }
+
+  .section-title{
+    display:flex; align-items:baseline; justify-content:space-between; margin-bottom:9px;
+  }
+  .section-title span:last-child{ font-size:11px; color:var(--slate); }
+
+  .today-card{
+    background:#fff; border:1px solid var(--hairline); border-radius:16px;
+    padding:15px 16px; box-shadow:var(--shadow-l); margin-bottom:18px;
+    display:flex; align-items:center; gap:13px;
+  }
+  .today-card .time-pill{
+    flex:none; text-align:center; padding:8px 10px; border-radius:10px;
+    background:rgba(31,107,246,.07); color:var(--accent);
+    font-size:11px; font-weight:700; line-height:1.35;
+  }
+  .today-card .t-info{ flex:1; min-width:0; }
+  .today-card .t-info b{ display:block; font-size:13.5px; font-weight:600; }
+  .today-card .t-info span{ font-size:11.5px; color:var(--slate); }
+  .join-btn{
+    flex:none; padding:9px 16px; border:none; border-radius:11px;
+    background:var(--accent); color:#fff; font-size:12px; font-weight:600;
+    font-family:var(--sans); box-shadow:0 4px 12px rgba(31,107,246,.22); cursor:pointer;
+  }
+
+  .program-row{
+    display:flex; align-items:center; gap:12px; padding:10px 2px;
+    border-bottom:1px solid var(--hairline); font-size:13px;
+  }
+  .program-row:last-child{ border-bottom:none; }
+  .program-row .p-dot{ flex:none; width:7px; height:7px; border-radius:50%; }
+  .program-row .p-name{ font-weight:500; }
+  .program-row .p-meta{ margin-left:auto; font-size:11px; color:var(--slate); }
+
+  .announce{
+    margin-top:16px; border:1px solid var(--hairline); border-radius:14px;
+    padding:13px 15px; background:#fff; display:flex; gap:11px; align-items:flex-start;
+  }
+  .announce .a-mark{
+    flex:none; width:26px; height:26px; border-radius:8px;
+    background:rgba(228,106,44,.09); color:var(--ember);
+    display:flex; align-items:center; justify-content:center; font-size:12px;
+  }
+  .announce b{ display:block; font-size:12.5px; font-weight:600; margin-bottom:2px; }
+  .announce p{ font-size:11.5px; color:var(--slate); line-height:1.5; }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <div class="eyebrow">Kata Learning · Design Direction</div>
+  <h1>Direction B — <em>Calm Studio</em></h1>
+  <ul class="rationale">
+    <li><strong>For whom</strong>Adult professionals upskilling after work. They read interfaces the way they read Linear or Notion — quiet hierarchy, real numbers, nothing shouting for attention.</li>
+    <li><strong>Why</strong>Restraint reads as craft and trust. One accent, hairline borders, and a serif display voice make study feel like a considered practice, not a game — which keeps streaks alive without gamified noise.</li>
+    <li><strong>Risk</strong>Calm can drift into bland or joyless. The serif moments, Kata's dry one-liners, and the ember/moss accents carry all the warmth — if they underperform, motivation cues may need a slightly stronger voice.</li>
+  </ul>
+</header>
+
+<main class="rail">
+
+  <!-- ================= SCREEN 1 — ROADMAP HOME ================= -->
+  <div class="screen-block">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons">●●●○ ◦ 5G ▮</span></div>
+
+      <div class="content">
+        <div class="hud">
+          <span class="hud-chip"><span class="ember">🔥</span><span class="hv">12</span></span>
+          <span class="hud-chip"><span class="bolt">⚡</span><span class="hv">240</span></span>
+          <span class="hud-chip">⬡<span class="hv">45</span></span>
+        </div>
+
+        <div class="greet">
+          <div class="smallcaps">Your roadmap</div>
+          <h2>Front-End<br>Foundations</h2>
+          <p>12 of 40 floors complete · on pace for June</p>
+        </div>
+
+        <div class="path">
+          <div class="node-row done">
+            <div class="node done">✓</div>
+            <div class="node-label">Floor 11 · Box model</div>
+            <div class="node-meta">96%</div>
+          </div>
+          <div class="node-row done">
+            <div class="node done">✓</div>
+            <div class="node-label">Floor 12 · Selectors &amp; specificity</div>
+            <div class="node-meta">88%</div>
+          </div>
+          <div class="node-row current">
+            <div class="node current">13</div>
+            <div class="node-label">Floor 13 · CSS Flexbox drills</div>
+            <div class="node-meta">Now</div>
+          </div>
+          <div class="node-row">
+            <div class="node">14</div>
+            <div class="node-label">Floor 14 · Flex layouts in practice</div>
+            <div class="node-meta">Locked</div>
+          </div>
+          <div class="node-row">
+            <div class="node">15</div>
+            <div class="node-label">Floor 15 · CSS Grid intro</div>
+            <div class="node-meta">Locked</div>
+          </div>
+        </div>
+
+        <div class="upnext">
+          <div class="smallcaps">Up next</div>
+          <h3>Floor 13 · CSS Flexbox drills</h3>
+          <div class="meta">10 questions · ≈6 min</div>
+          <button class="btn-primary">Start floor 13</button>
+          <div class="kata-line">
+            <span class="kata-glyph">🐈‍⬛</span>
+            <span>“Six minutes. Then I’ll leave you alone.”</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="bottom-nav">
+        <div class="nav-item"><span class="nicon">⌂</span>Home</div>
+        <div class="nav-item"><span class="nicon">✎</span>Assignments</div>
+        <div class="nav-item active"><span class="nicon">⬡</span>Roadmap</div>
+        <div class="nav-item"><span class="nicon">◈</span>League</div>
+        <div class="nav-item"><span class="nicon">✦</span>Events</div>
+      </nav>
+    </div></div>
+    <div class="screen-label">01 · Roadmap home</div>
+  </div>
+
+  <!-- ================= SCREEN 2 — FLOOR RUNNER ================= -->
+  <div class="screen-block">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons">●●●○ ◦ 5G ▮</span></div>
+
+      <div class="content">
+        <div class="progress-hairline"><div class="fill"></div></div>
+        <div class="runner-top">
+          <span class="smallcaps">Floor 13 · Flexbox drills</span>
+          <span class="runner-count"><b>4</b> / 10</span>
+        </div>
+
+        <div class="question">How do you center a child div horizontally and vertically?</div>
+
+        <div class="answers">
+          <div class="answer">
+            <span class="a-key">A</span>
+            <span class="radio"></span>
+            <span><code>text-align: center</code> on the parent</span>
+          </div>
+          <div class="answer selected">
+            <span class="a-key">B</span>
+            <span class="radio"></span>
+            <span><code>display: flex; justify-content: center; align-items: center</code></span>
+          </div>
+          <div class="answer">
+            <span class="a-key">C</span>
+            <span class="radio"></span>
+            <span><code>margin: 0 auto</code> on the child</span>
+          </div>
+          <div class="answer">
+            <span class="a-key">D</span>
+            <span class="radio"></span>
+            <span><code>float: center</code> on the child</span>
+          </div>
+        </div>
+
+        <div class="hint-row">
+          <a class="hint-link" href="#">Hint <span class="hint-cost">· −5⚡</span></a>
+        </div>
+
+        <div class="kata-line runner-kata">
+          <span class="kata-glyph">🐈‍⬛</span>
+          <span>“One axis lines them up. The other does the rest.”</span>
+        </div>
+
+        <div class="runner-foot">
+          <button class="btn-primary">Check</button>
+          <div class="foot-states">
+            <span class="fs-label">Before an answer is<br>selected, Check stays off</span>
+            <button class="btn-mini-disabled" disabled>Check</button>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <div class="screen-label">02 · Floor runner — question 4/10</div>
+  </div>
+
+  <!-- ================= SCREEN 3 — CLASSROOM DASHBOARD ================= -->
+  <div class="screen-block">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons">●●●○ ◦ 5G ▮</span></div>
+
+      <div class="content">
+        <div class="dash-head">
+          <div class="smallcaps">Classroom</div>
+          <h2>Good morning, Nino</h2>
+          <div class="date">Tuesday, May 14 · Week 7 of 12</div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="smallcaps">Grade</div>
+            <div class="sv blue">87</div>
+            <div class="ssub">vs group avg 81</div>
+          </div>
+          <div class="stat">
+            <div class="smallcaps">Attendance</div>
+            <div class="sv moss">92<span class="unit">%</span></div>
+            <div class="ssub">22 of 24 sessions</div>
+          </div>
+          <div class="stat">
+            <div class="smallcaps">Streak</div>
+            <div class="sv ember">12<span class="unit"> days</span></div>
+            <div class="ssub">best this cohort</div>
+          </div>
+          <div class="stat">
+            <div class="smallcaps">Active days</div>
+            <div class="sv">26</div>
+            <div class="ssub">of last 30 days</div>
+          </div>
+        </div>
+
+        <div class="section-title"><span class="smallcaps">Today</span><span>1 class</span></div>
+        <div class="today-card">
+          <div class="time-pill">12:00<br>13:30</div>
+          <div class="t-info">
+            <b>CSS Flexbox</b>
+            <span>Room 204 · with M. Beridze</span>
+          </div>
+          <button class="join-btn">Join class</button>
+        </div>
+
+        <div class="section-title"><span class="smallcaps">Programs</span><span>View all</span></div>
+        <div>
+          <div class="program-row">
+            <span class="p-dot" style="background:var(--accent)"></span>
+            <span class="p-name">Front-End Foundations</span>
+            <span class="p-meta">Floor 13 / 40</span>
+          </div>
+          <div class="program-row">
+            <span class="p-dot" style="background:var(--moss)"></span>
+            <span class="p-name">JavaScript Essentials</span>
+            <span class="p-meta">Completed</span>
+          </div>
+          <div class="program-row">
+            <span class="p-dot" style="background:#C9CCD6"></span>
+            <span class="p-name">React in Practice</span>
+            <span class="p-meta">Starts Jun 2</span>
+          </div>
+        </div>
+
+        <div class="announce">
+          <div class="a-mark">✦</div>
+          <div>
+            <b>Portfolio review on Friday</b>
+            <p>Bring your Flexbox exercise from Floor 14 — M. Beridze will review layouts live in room 204.</p>
+          </div>
+        </div>
+      </div>
+
+      <nav class="bottom-nav">
+        <div class="nav-item active"><span class="nicon">⌂</span>Home</div>
+        <div class="nav-item"><span class="nicon">✎</span>Assignments</div>
+        <div class="nav-item"><span class="nicon">⬡</span>Roadmap</div>
+        <div class="nav-item"><span class="nicon">◈</span>League</div>
+        <div class="nav-item"><span class="nicon">✦</span>Events</div>
+      </nav>
+    </div></div>
+    <div class="screen-label">03 · Classroom dashboard</div>
+  </div>
+
+</main>
+
+</body>
+</html>

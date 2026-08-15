@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10x LMS — Design directions: pick before we build</title><style>
+*{box-sizing:border-box;margin:0}
+body{background:#F4F2EE;color:#101636;font:14px/1.55 ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1400px;margin:0 auto;padding:0 24px 80px}
+header{background:#0C1736;color:#fff;padding:44px 0 36px}
+.kick{font:800 10.5px ui-rounded;letter-spacing:.16em;text-transform:uppercase;color:#F2C661}
+h1{font:900 32px ui-rounded;letter-spacing:-.5px;margin:8px 0 6px}
+.sub{color:#C7D2F2;max-width:70ch;font-size:14.5px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.dcard{background:#fff;border:1px solid #E4E9F6;border-radius:18px;overflow:hidden;box-shadow:0 2px 10px rgba(12,23,54,.06)}
+.dcard .hd{padding:16px 18px;border-bottom:1px solid #E4E9F6;display:flex;justify-content:space-between;align-items:center}
+.dcard .hd b{font:900 15px ui-rounded}
+.dcard .hd a{font:800 11px ui-rounded;color:#1F6BF6;text-decoration:none}
+.dcard iframe{width:100%;height:640px;border:0;transform:scale(1)}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;margin-top:26px;box-shadow:0 2px 10px rgba(12,23,54,.06)}
+th{background:#0C1736;color:#fff;font:800 11px ui-rounded;text-align:left;padding:10px 14px;letter-spacing:.06em}
+td{padding:10px 14px;border-bottom:1px solid #EEF1F8;font-size:12.5px;vertical-align:top}
+tr:last-child td{border-bottom:0}
+td b{font-weight:800}
+.reco{background:#fff;border-left:5px solid #12B76A;border-radius:14px;padding:20px 24px;margin-top:26px;box-shadow:0 2px 10px rgba(12,23,54,.06)}
+.reco h2{font:900 18px ui-rounded;margin-bottom:6px}
+.reco p{margin:6px 0;max-width:110ch}
+.tag{display:inline-block;border-radius:99px;padding:2px 10px;font:800 10px ui-rounded;margin-right:5px}
+.tA{background:#E4EFFF;color:#1557C8}.tB{background:#F0EEE9;color:#6B5E2E}.tC{background:#171E3D;color:#8FA0FF}
+@media (max-width:1000px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><div class="wrap"><div class="kick">10x LMS · design shootout · round 2</div>
+<h1>Three directions. One decision.</h1>
+<p class="sub">Same three hero screens — Roadmap home, Floor runner, Classroom dashboard — crafted in three different visual languages, with real copy and real data from the PRD. This is the fork: pick the language, and we roll it across all 173 screens.</p>
+</div></header>
+<div class="wrap">
+<div class="grid">
+<div class="dcard"><div class="hd"><b><span class="tag tA">A</span>Playful Bold</b><a href="dir-a-playful.html" target="_blank">open full size ↗</a></div><iframe src="dir-a-playful.html"></iframe></div>
+<div class="dcard"><div class="hd"><b><span class="tag tB">B</span>Calm Studio</b><a href="dir-b-calm.html" target="_blank">open full size ↗</a></div><iframe src="dir-b-calm.html"></iframe></div>
+<div class="dcard"><div class="hd"><b><span class="tag tC">C</span>Night Arcade</b><a href="dir-c-arcade.html" target="_blank">open full size ↗</a></div><iframe src="dir-c-arcade.html"></iframe></div>
+</div>
+
+<table>
+<tr><th style="width:200px">Dimension</th><th><span class="tag tA">A</span> Playful Bold</th><th><span class="tag tB">B</span> Calm Studio</th><th><span class="tag tC">C</span> Night Arcade</th></tr>
+<tr><td><b>Personality</b></td><td>Duolingo-grade game energy; chunky 3D buttons; Kata front and center</td><td>Premium quiet craft; serif accents; Kata whispers</td><td>Cosmic game UI; constellation map; glowing Kata</td></tr>
+<tr><td><b>Best for</b></td><td>The habit loop: floors, streaks, quests, league — where motivation is manufactured</td><td>Adult trust: grades, exams, documents, staff surfaces — where credibility matters</td><td>Dev-track appeal: coding floors, night owls, streamers' aesthetic</td></tr>
+<tr><td><b>Accessibility risk</b></td><td>Low — big type, strong contrast</td><td>Low — highest readability of the three</td><td>Real — dark UI needs WCAG contrast audit + a light sibling</td></tr>
+<tr><td><b>Brand risk</b></td><td>Can read childish in certification contexts — mitigated by adult copy</td><td>Can drift bland — motivation cues must stay visible</td><td>Can read "gamer" for culinary/hospitality cohorts</td></tr>
+<tr><td><b>Build cost</b></td><td>Medium — custom chunky components</td><td>Lowest — closest to standard component libraries</td><td>Highest — glow/animation polish everywhere</td></tr>
+<tr><td><b>Parents of it</b></td><td>Duolingo path + our journey-map warmth</td><td>Linear / Notion / Apple HIG</td><td>Our journey map itself, VS Code, game HUDs</td></tr>
+</table>
+
+<div class="reco">
+<h2>✅ Recommendation: A for the game, B for the school — C later as dark mode</h2>
+<p><b>The PRD already rules this (two-design-systems law):</b> the gamified layer and the classroom layer are different emotional products. <b>Direction A</b> is the student-facing game core — roadmap, floors, streaks, league, Kata — because motivation is its entire job and its chunky honesty (pressable buttons, visible progress) is exactly what a working adult with 6 minutes needs. <b>Direction B</b> dresses the school — dashboard, grades, exams, statements, every staff surface — where calm read as credibility, and it's the cheapest to build well. <b>Direction C</b> is real but risky as a default: keep it as the future "dark mode" skin of Direction A (the constellation map already exists there), after a WCAG contrast pass.</p>
+<p><b>What happens on your answer:</b> the picked direction(s) become the design tokens + component kit; we re-render all 173 screens in it (the flow-by-flow viewer already exists), starting with the 25 screens of batch B1. One word from you — "A", "B", "C", "A+B", or "C as dark mode" — and the design system locks.</p>
+</div>
+</div>
+</body></html>

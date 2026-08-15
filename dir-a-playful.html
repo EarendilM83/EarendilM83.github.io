@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direction A — Playful Bold</title>
+<style>
+  :root{
+    --blue:#1F6BF6; --blue-dark:#1557C8; --blue-soft:#EAF1FE;
+    --gold:#F2C661; --gold-dark:#D9A83E; --gold-soft:#FDF3DC;
+    --green:#12B76A; --green-dark:#0E9455; --green-soft:#E5F8EF;
+    --ink:#0C1736; --ink-soft:#5A6480;
+    --paper:#FFF9F2; --line:#EFE3CF; --line-dark:#E2D2B6;
+    --grey:#EDE5D8; --grey-dark:#C9BBA2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);}
+  body{
+    font-family:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,-apple-system,sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    padding:48px 40px 64px;
+  }
+
+  /* ---------- page header ---------- */
+  .page-head{max-width:1330px;margin:0 auto 36px;}
+  .kicker{
+    display:inline-block;background:var(--ink);color:var(--gold);
+    font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
+    padding:7px 14px;border-radius:999px;margin-bottom:14px;
+  }
+  .page-head h1{
+    font-size:44px;font-weight:900;letter-spacing:-0.03em;line-height:1.02;
+  }
+  .page-head h1 em{font-style:normal;color:var(--blue);}
+  .rationale{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap;}
+  .rationale .card{
+    flex:1;min-width:300px;background:#fff;border:2px solid var(--ink);
+    border-radius:20px;padding:16px 18px;box-shadow:0 4px 0 var(--line-dark);
+  }
+  .rationale .card b{
+    display:block;font-size:12px;font-weight:900;letter-spacing:.1em;
+    text-transform:uppercase;margin-bottom:6px;
+  }
+  .rationale .card p{font-size:13.5px;line-height:1.5;color:var(--ink-soft);font-weight:600;}
+  .rationale .why b{color:var(--blue);}
+  .rationale .who b{color:var(--green-dark);}
+  .rationale .risk b{color:#C28A1B;}
+
+  /* ---------- phone stage ---------- */
+  .stage{display:flex;gap:36px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}
+  .phone-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .phone{
+    width:414px;background:var(--ink);border-radius:52px;padding:12px;
+    box-shadow:0 28px 56px rgba(12,23,54,.22), 0 4px 0 rgba(12,23,54,.35);
+  }
+  .screen{
+    width:390px;height:844px;border-radius:40px;overflow:hidden;
+    background:var(--paper);display:flex;flex-direction:column;position:relative;
+  }
+  .caption{
+    font-size:13px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink);background:#fff;border:2px solid var(--ink);
+    border-radius:999px;padding:8px 18px;box-shadow:0 3px 0 var(--line-dark);
+  }
+  .caption span{color:var(--blue);}
+
+  /* ---------- shared screen bits ---------- */
+  .statusbar{
+    height:36px;flex:none;display:flex;align-items:center;justify-content:space-between;
+    padding:6px 24px 0;font-size:13px;font-weight:800;
+  }
+  .statusbar .icons{display:flex;gap:6px;align-items:center;font-size:12px;}
+  .btn3d{
+    font-family:inherit;font-weight:900;cursor:pointer;border:none;
+    transition:transform .06s ease, box-shadow .06s ease;
+  }
+  .btn3d:active{transform:translateY(4px);}
+
+  /* bottom nav */
+  .nav{
+    height:78px;flex:none;background:#fff;border-top:2px solid var(--line);
+    display:flex;align-items:stretch;padding:8px 8px 12px;
+  }
+  .nav .item{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;border-radius:14px;font-size:10.5px;font-weight:900;color:var(--ink-soft);
+  }
+  .nav .item .ic{font-size:20px;line-height:1;}
+  .nav .item.active{background:var(--blue-soft);color:var(--blue);outline:2px solid var(--blue);}
+
+  /* chunky pill */
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;background:#fff;
+    border:2px solid var(--ink);border-radius:999px;padding:7px 13px;
+    font-size:14px;font-weight:900;box-shadow:0 3px 0 var(--line-dark);
+  }
+
+  /* ---------- SCREEN 1 : roadmap ---------- */
+  .hud{
+    height:60px;flex:none;display:flex;align-items:center;gap:10px;
+    padding:0 16px;
+  }
+  .hud .pill{font-size:14px;padding:7px 12px;}
+  .hud .pill.streak{background:#fff;}
+  .hud .pill.energy{background:var(--gold);box-shadow:0 3px 0 var(--gold-dark);}
+  .hud .pill.gems{color:var(--blue);}
+  .hud .spacer{flex:1;}
+  .hud .avatar{
+    width:38px;height:38px;border-radius:50%;background:var(--blue-soft);
+    border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:900;color:var(--blue);box-shadow:0 3px 0 var(--line-dark);
+  }
+
+  .kata-row{
+    height:112px;flex:none;display:flex;align-items:center;gap:10px;padding:0 16px;
+  }
+  .kata-row img{width:84px;height:84px;object-fit:contain;flex:none;}
+  .bubble{
+    position:relative;background:#fff;border:2px solid var(--ink);border-radius:18px;
+    padding:10px 14px;font-size:13px;font-weight:800;line-height:1.35;
+    box-shadow:0 3px 0 var(--line-dark);
+  }
+  .bubble::before{
+    content:"";position:absolute;left:-8px;top:34px;width:12px;height:12px;
+    background:#fff;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    transform:rotate(45deg);
+  }
+
+  .map{height:560px;flex:none;position:relative;}
+  .map svg{position:absolute;inset:0;}
+  .node{position:absolute;display:flex;flex-direction:column;align-items:center;}
+  .node .circle{
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-weight:900;position:relative;
+  }
+  .node .tag{
+    margin-top:8px;font-size:11px;font-weight:900;letter-spacing:.04em;
+    background:#fff;border:2px solid var(--ink);border-radius:999px;padding:3px 10px;
+    box-shadow:0 2px 0 var(--line-dark);white-space:nowrap;
+  }
+  .node.done .circle{
+    width:62px;height:62px;background:var(--gold);border:2px solid var(--gold-dark);
+    box-shadow:0 4px 0 var(--gold-dark);color:#fff;font-size:26px;
+  }
+  .node.current .circle{
+    width:96px;height:96px;background:var(--blue);border:2px solid var(--blue-dark);
+    color:#fff;font-size:34px;
+    animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 6px 0 var(--blue-dark),0 0 0 0 rgba(31,107,246,.45);}
+    70%{box-shadow:0 6px 0 var(--blue-dark),0 0 0 20px rgba(31,107,246,0);}
+    100%{box-shadow:0 6px 0 var(--blue-dark),0 0 0 0 rgba(31,107,246,0);}
+  }
+  .node.current .tag{background:var(--ink);color:#fff;box-shadow:0 2px 0 rgba(12,23,54,.4);}
+  .node.locked .circle{
+    width:62px;height:62px;background:var(--grey);border:2px solid var(--grey-dark);
+    box-shadow:0 4px 0 var(--grey-dark);font-size:24px;
+  }
+  .node.locked .tag{color:var(--ink-soft);border-color:var(--grey-dark);box-shadow:0 2px 0 var(--grey);}
+  .node.boss .circle{
+    width:72px;height:72px;background:var(--ink);border:2px solid var(--gold);
+    box-shadow:0 4px 0 var(--gold-dark);font-size:34px;
+  }
+  .node.boss .tag{background:var(--ink);color:var(--gold);border-color:var(--ink);box-shadow:0 2px 0 rgba(12,23,54,.4);}
+  .start-btn{
+    position:absolute;left:105px;top:304px;width:180px;height:56px;
+    background:var(--blue);color:#fff;border:2px solid var(--blue-dark);
+    border-radius:18px;font-size:19px;letter-spacing:.12em;
+    box-shadow:0 5px 0 var(--blue-dark);
+  }
+  .start-btn:active{box-shadow:0 1px 0 var(--blue-dark);}
+</style>
+<style>
+  /* ---------- SCREEN 2 : floor runner ---------- */
+  .runner-head{
+    flex:none;display:flex;align-items:center;gap:12px;padding:10px 16px 4px;
+  }
+  .close-btn{
+    width:40px;height:40px;flex:none;background:#fff;border:2px solid var(--ink);
+    border-radius:14px;font-size:15px;font-weight:900;color:var(--ink);
+    box-shadow:0 3px 0 var(--line-dark);
+  }
+  .close-btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--line-dark);}
+  .progress{
+    flex:1;height:18px;background:#fff;border:2px solid var(--ink);border-radius:999px;
+    overflow:hidden;box-shadow:0 3px 0 var(--line-dark);
+  }
+  .progress .fill{
+    height:100%;width:40%;background:var(--gold);border-radius:999px;
+    border-right:2px solid var(--gold-dark);
+    background-image:linear-gradient(0deg,rgba(255,255,255,.35) 0 45%,transparent 45%);
+  }
+  .count-chip{
+    flex:none;font-size:13px;font-weight:900;color:var(--ink);
+    background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 11px;
+    box-shadow:0 3px 0 var(--line-dark);
+  }
+  .floor-label{
+    flex:none;padding:8px 20px 2px;font-size:12px;font-weight:900;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--blue);
+  }
+  .q-body{flex:1;display:flex;flex-direction:column;padding:10px 20px 0;min-height:0;}
+  .q-card{
+    background:#fff;border:2px solid var(--ink);border-radius:22px;
+    padding:18px 18px 20px;box-shadow:0 4px 0 var(--line-dark);margin-bottom:16px;
+  }
+  .q-card .q-kicker{
+    font-size:11px;font-weight:900;letter-spacing:.12em;color:var(--gold-dark);
+    text-transform:uppercase;margin-bottom:8px;
+  }
+  .q-card h2{font-size:20px;font-weight:900;letter-spacing:-0.02em;line-height:1.25;}
+  .opt{
+    width:100%;display:flex;align-items:center;gap:12px;text-align:left;
+    background:#fff;border:2px solid var(--line-dark);border-radius:18px;
+    padding:13px 14px;margin-bottom:12px;font-size:14.5px;font-weight:800;color:var(--ink);
+    box-shadow:0 3px 0 var(--line-dark);font-family:inherit;cursor:pointer;
+    transition:transform .06s ease, box-shadow .06s ease;
+  }
+  .opt:active{transform:translateY(3px);box-shadow:0 0 0 var(--line-dark);}
+  .opt .key{
+    width:30px;height:30px;flex:none;border-radius:10px;background:var(--paper);
+    border:2px solid var(--line-dark);display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:900;color:var(--ink-soft);
+  }
+  .opt.selected{
+    border-color:var(--blue);background:var(--blue-soft);
+    box-shadow:0 3px 0 var(--blue-dark);
+  }
+  .opt.selected .key{background:var(--blue);border-color:var(--blue-dark);color:#fff;}
+  .hint-row{display:flex;align-items:center;gap:10px;margin:2px 0 0;}
+  .hint-chip{
+    background:var(--gold-soft);border:2px solid var(--gold);color:#8A6414;
+    border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:900;
+    box-shadow:0 3px 0 var(--gold-dark);cursor:pointer;font-family:inherit;
+  }
+  .hint-chip:active{transform:translateY(3px);box-shadow:0 0 0 var(--gold-dark);}
+  .kata-mini{display:flex;align-items:center;gap:8px;margin-left:auto;}
+  .kata-mini img{width:46px;height:46px;object-fit:contain;}
+  .kata-mini .line{
+    background:#fff;border:2px solid var(--ink);border-radius:14px;
+    font-size:11.5px;font-weight:800;padding:6px 10px;box-shadow:0 2px 0 var(--line-dark);
+  }
+  .runner-foot{flex:none;padding:14px 20px 22px;}
+  .check-btn{
+    width:100%;height:58px;border-radius:18px;font-size:18px;letter-spacing:.14em;
+    background:var(--green);color:#fff;border:2px solid var(--green-dark);
+    box-shadow:0 5px 0 var(--green-dark);
+  }
+  .check-btn:active{box-shadow:0 1px 0 var(--green-dark);}
+
+  /* ---------- SCREEN 3 : classroom dashboard ---------- */
+  .dash-body{flex:1;padding:6px 18px 12px;display:flex;flex-direction:column;gap:14px;min-height:0;}
+  .greet{display:flex;align-items:center;gap:10px;}
+  .greet .txt{flex:1;}
+  .greet h2{font-size:24px;font-weight:900;letter-spacing:-0.025em;line-height:1.1;}
+  .greet .sub{font-size:12.5px;font-weight:800;color:var(--ink-soft);margin-top:3px;}
+  .greet img{width:62px;height:62px;object-fit:contain;}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .stat{
+    border-radius:20px;padding:13px 14px 12px;border:2px solid;
+    display:flex;flex-direction:column;gap:2px;
+  }
+  .stat .big{font-size:26px;font-weight:900;letter-spacing:-0.02em;line-height:1;}
+  .stat .lbl{font-size:11.5px;font-weight:900;letter-spacing:.03em;opacity:.92;}
+  .stat.blue{background:var(--blue);border-color:var(--blue-dark);box-shadow:0 4px 0 var(--blue-dark);color:#fff;}
+  .stat.green{background:var(--green);border-color:var(--green-dark);box-shadow:0 4px 0 var(--green-dark);color:#fff;}
+  .stat.gold{background:var(--gold);border-color:var(--gold-dark);box-shadow:0 4px 0 var(--gold-dark);color:var(--ink);}
+  .stat.inktile{background:var(--ink);border-color:#233156;box-shadow:0 4px 0 #233156;color:#fff;}
+  .today{
+    background:#fff;border:2px solid var(--ink);border-radius:20px;
+    box-shadow:0 4px 0 var(--line-dark);padding:13px 14px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .today .info{flex:1;min-width:0;}
+  .today .chip{
+    display:inline-block;background:var(--blue-soft);color:var(--blue);
+    border:2px solid var(--blue);border-radius:999px;font-size:10px;font-weight:900;
+    letter-spacing:.1em;padding:2px 9px;margin-bottom:5px;
+  }
+  .today .cls{font-size:16px;font-weight:900;letter-spacing:-0.01em;}
+  .today .meta{font-size:12px;font-weight:800;color:var(--ink-soft);margin-top:2px;}
+  .zoom-btn{
+    flex:none;background:var(--green);color:#fff;border:2px solid var(--green-dark);
+    border-radius:16px;padding:12px 16px;font-size:14px;font-weight:900;
+    box-shadow:0 4px 0 var(--green-dark);font-family:inherit;cursor:pointer;
+  }
+  .zoom-btn:active{transform:translateY(4px);box-shadow:0 0 0 var(--green-dark);}
+  .programs{display:flex;gap:10px;}
+  .prog{
+    flex:1;display:flex;align-items:center;gap:9px;background:#fff;
+    border:2px solid var(--ink);border-radius:999px;padding:6px 10px 6px 6px;
+    box-shadow:0 3px 0 var(--line-dark);min-width:0;
+  }
+  .prog .badge{
+    width:28px;height:28px;flex:none;border-radius:10px;display:flex;
+    align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;
+  }
+  .prog.py .badge{background:var(--blue);border:2px solid var(--blue-dark);}
+  .prog.ag .badge{background:var(--gold);border:2px solid var(--gold-dark);color:var(--ink);}
+  .prog .nm{font-size:10.5px;font-weight:900;line-height:1.15;white-space:nowrap;}
+  .prog .nm small{display:block;font-size:9.5px;font-weight:900;color:var(--ink-soft);letter-spacing:.06em;}
+  .announce{
+    background:var(--gold-soft);border:2px solid var(--gold);border-radius:20px;
+    box-shadow:0 4px 0 var(--gold-dark);padding:13px 16px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .announce .pin{
+    width:38px;height:38px;flex:none;background:#fff;border:2px solid var(--gold);
+    border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;
+  }
+  .announce .a-txt b{display:block;font-size:13.5px;font-weight:900;}
+  .announce .a-txt span{font-size:12px;font-weight:700;color:#8A6414;}
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <span class="kicker">VET Learning App · Georgia · Concept</span>
+  <h1>Direction A — <em>Playful Bold</em></h1>
+  <div class="rationale">
+    <div class="card why">
+      <b>Why this direction</b>
+      <p>Duolingo-grade game language — chunky 3D buttons, a candy-map roadmap, streaks and coins — turns repetitive vocational drills into a habit loop. Progress is always visible and every tap feels rewarding.</p>
+    </div>
+    <div class="card who">
+      <b>For whom</b>
+      <p>Adults 18+ in Georgian VET programs who study on mobile in short bursts between work and family. They need momentum and encouragement, not another corporate LMS dashboard.</p>
+    </div>
+    <div class="card risk">
+      <b>Risk to watch</b>
+      <p>Playfulness can read as childish in certification contexts. Mitigation: confident adult copy, warm paper + ink navy keep it premium, and Kata the cat coaches instead of babysits.</p>
+    </div>
+  </div>
+</header>
+
+<main class="stage">
+
+  <!-- ============ SCREEN 1 · ROADMAP HOME ============ -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="screen">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="icons">📶 🔋</span>
+        </div>
+
+        <div class="hud">
+          <span class="pill streak">🔥 12</span>
+          <span class="pill energy">⚡ 240</span>
+          <span class="pill gems">⬡ 45</span>
+          <span class="spacer"></span>
+          <span class="avatar">N</span>
+        </div>
+
+        <div class="kata-row">
+          <img src="assets/kata/sprites/warm-teacher.png" alt="Kata the cat">
+          <div class="bubble">Floor 13. CSS Flexbox. Six minutes. Then I will leave you alone.</div>
+        </div>
+
+        <div class="map">
+          <svg width="390" height="560" viewBox="0 0 390 560" fill="none">
+            <path d="M102 40 C 190 60, 250 84, 282 124 C 314 166, 250 188, 195 214 L 195 330 C 195 366, 250 380, 282 414 C 314 444, 190 452, 102 486"
+                  stroke="#F0E2C8" stroke-width="14" stroke-linecap="round"/>
+            <path d="M102 40 C 190 60, 250 84, 282 124 C 314 166, 250 188, 195 214 L 195 330 C 195 366, 250 380, 282 414 C 314 444, 190 452, 102 486"
+                  stroke="#E0CB9E" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 16"/>
+          </svg>
+
+          <div class="node done" style="left:71px;top:9px;">
+            <div class="circle">✓</div>
+            <div class="tag">Floor 11</div>
+          </div>
+
+          <div class="node done" style="left:251px;top:93px;">
+            <div class="circle">✓</div>
+            <div class="tag">Floor 12</div>
+          </div>
+
+          <div class="node current" style="left:147px;top:164px;">
+            <div class="circle">13</div>
+            <div class="tag">CSS Flexbox</div>
+          </div>
+
+          <button class="start-btn btn3d">START</button>
+
+          <div class="node locked" style="left:251px;top:383px;">
+            <div class="circle">🔒</div>
+            <div class="tag">Floor 14</div>
+          </div>
+
+          <div class="node boss" style="left:66px;top:448px;">
+            <div class="circle">👹</div>
+            <div class="tag">BOSS · Grid Giant</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <div class="item"><span class="ic">🏠</span>Home</div>
+          <div class="item"><span class="ic">📋</span>Assignments</div>
+          <div class="item active"><span class="ic">🗺</span>Roadmap</div>
+          <div class="item"><span class="ic">🏆</span>League</div>
+          <div class="item"><span class="ic">📅</span>Events</div>
+        </nav>
+      </div>
+    </div>
+    <div class="caption"><span>1 ·</span> Roadmap home — the money screen</div>
+  </div>
+
+  <!-- ============ SCREEN 2 · FLOOR RUNNER ============ -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="screen">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="icons">📶 🔋</span>
+        </div>
+
+        <div class="runner-head">
+          <button class="close-btn">✕</button>
+          <div class="progress"><div class="fill"></div></div>
+          <span class="count-chip">4/10</span>
+        </div>
+        <div class="floor-label">Floor 13 · Flexbox drills</div>
+
+        <div class="q-body">
+          <div class="q-card">
+            <div class="q-kicker">Question 4 · +10 ⚡</div>
+            <h2>How do you center a child div horizontally and vertically?</h2>
+          </div>
+
+          <button class="opt"><span class="key">A</span>Set margin: auto on the child</button>
+          <button class="opt selected"><span class="key">B</span>On the parent: display: flex; justify-content: center; align-items: center</button>
+          <button class="opt"><span class="key">C</span>Set text-align: center on the child</button>
+          <button class="opt"><span class="key">D</span>Float the child left, then add padding</button>
+
+          <div class="hint-row">
+            <button class="hint-chip">💡 Hint −5⚡</button>
+            <div class="kata-mini">
+              <img src="assets/kata/sprites/smug.png" alt="Kata mini">
+              <span class="line">Think parent, not child.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="runner-foot">
+          <button class="check-btn btn3d">CHECK</button>
+        </div>
+      </div>
+    </div>
+    <div class="caption"><span>2 ·</span> Floor runner — question 4 of 10</div>
+  </div>
+
+  <!-- ============ SCREEN 3 · CLASSROOM DASHBOARD ============ -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="screen">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="icons">📶 🔋</span>
+        </div>
+
+        <div class="dash-body">
+          <div class="greet">
+            <div class="txt">
+              <h2>Welcome, Nino 👋</h2>
+              <div class="sub">Tuesday, 4 June · Cohort-4 is on fire</div>
+            </div>
+            <img src="assets/kata/sprites/proud.png" alt="Kata proud">
+          </div>
+
+          <div class="stats">
+            <div class="stat blue">
+              <span class="big">87</span>
+              <span class="lbl">Grade · group avg 81</span>
+            </div>
+            <div class="stat green">
+              <span class="big">92%</span>
+              <span class="lbl">Attendance</span>
+            </div>
+            <div class="stat gold">
+              <span class="big">🔥 12</span>
+              <span class="lbl">Day streak</span>
+            </div>
+            <div class="stat inktile">
+              <span class="big">26/30</span>
+              <span class="lbl">Active days this month</span>
+            </div>
+          </div>
+
+          <div class="today">
+            <div class="info">
+              <span class="chip">TODAY</span>
+              <div class="cls">CSS Flexbox</div>
+              <div class="meta">12:00–13:30 · room 204</div>
+            </div>
+            <button class="zoom-btn">Join Zoom</button>
+          </div>
+
+          <div class="programs">
+            <div class="prog py">
+              <span class="badge">Py</span>
+              <span class="nm">Python foundations<small>COHORT-4</small></span>
+            </div>
+            <div class="prog ag">
+              <span class="badge">Ag</span>
+              <span class="nm">Agile basics<small>COHORT-2</small></span>
+            </div>
+          </div>
+
+          <div class="announce">
+            <span class="pin">📌</span>
+            <div class="a-txt">
+              <b>Bring laptops Thursday</b>
+              <span>We set up Docker together — charge them overnight.</span>
+            </div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <div class="item active"><span class="ic">🏠</span>Home</div>
+          <div class="item"><span class="ic">📋</span>Assignments</div>
+          <div class="item"><span class="ic">🗺</span>Roadmap</div>
+          <div class="item"><span class="ic">🏆</span>League</div>
+          <div class="item"><span class="ic">📅</span>Events</div>
+        </nav>
+      </div>
+    </div>
+    <div class="caption"><span>3 ·</span> Classroom dashboard</div>
+  </div>
+
+</main>
+</body>
+</html>
