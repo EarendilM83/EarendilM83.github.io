@@ -1,275 +1,41 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10x — Auth pack · flows 1–8 (Theme A)</title><style>
-:root{--green:#58CC02;--green-d:#46A302;--green-line:#58A700;--blue:#1CB0F6;--blue-d:#1899D6;
- --gold:#FFC800;--gold-d:#B88A00;--orange:#FF9600;--red:#FF4B4B;--eel:#4B4B4B;--hare:#777;
- --wolf:#AFAFAF;--ln:#E5E5E5;--polar:#F7F7F7;--swan:#FFF;--ink:#131F24}
-*{box-sizing:border-box;margin:0;-webkit-font-smoothing:antialiased}
-body{background:#ECECEE;font-family:"Nunito",ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--eel)}
-header{background:#131F24;color:#fff;padding:30px 0 26px}
-header .in{max-width:1420px;margin:0 auto;padding:0 26px}
+<title>10x — Auth pack v3 · flows 1–8 (rendered designs)</title><style>
+*{box-sizing:border-box;margin:0}
+body{background:#11142A;font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#E9ECF7}
+header{background:#0B0E1E;border-bottom:1px solid rgba(255,255,255,.08);padding:26px 0 22px}
+header .in{max-width:1500px;margin:0 auto;padding:0 26px}
 header .k{font:900 10px ui-rounded;letter-spacing:.18em;color:#FFC800;text-transform:uppercase}
-header h1{font:900 26px ui-rounded;letter-spacing:-.4px;margin:8px 0 6px}
-header p{color:#A9B4D8;font:700 12.5px ui-rounded;max-width:76ch}
+header h1{font:900 26px ui-rounded;letter-spacing:-.4px;margin:8px 0 6px;color:#fff}
+header p{color:#A9B4D8;font:700 12.5px ui-rounded;max-width:78ch}
 header .meta{margin-top:10px;font:800 11px ui-rounded;color:#7E8FA8}
-main{max-width:1420px;margin:0 auto;padding:34px 26px 100px}
-.flow{margin-bottom:64px}
+main{max-width:1500px;margin:0 auto;padding:34px 26px 100px}
+.flow{margin-bottom:60px}
 .fhead{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap}
-.fhead .no{font:900 11px ui-rounded;color:#fff;background:var(--green);border-radius:8px;padding:3px 10px;letter-spacing:.06em}
-.fhead h2{font:900 20px ui-rounded;color:var(--ink);letter-spacing:-.3px}
-.fhead .ids{font:800 11px ui-rounded;color:#8A93AC}
-.fnarr{font:700 12.5px ui-rounded;color:var(--hare);max-width:90ch;margin-bottom:16px}
-.srow{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
-.ph{width:390px;height:844px;background:var(--swan);border-radius:26px;overflow:hidden;position:relative;
-  box-shadow:0 2px 6px rgba(0,0,0,.08),0 24px 48px rgba(0,0,0,.10);display:flex;flex-direction:column;border:1px solid #DDD}
-.ph.dark{background:#131F24}
-.ph .tag{position:absolute;left:-1px;top:-1px;background:#131F24;color:#FFC800;font:900 9.5px ui-rounded;padding:4px 10px;border-radius:0 0 12px 0;z-index:10;letter-spacing:.06em}
-.ph .tag.g{background:var(--green);color:#fff}
-.dnote{max-width:390px;font:600 11.5px/1.6 ui-rounded;color:#68709A}
-.dnote b{color:#4A5578}
-/* --- kit atoms --- */
-.sb{display:flex;justify-content:space-between;align-items:center;padding:16px 22px 0;flex:none}
-.sb .t{font:900 13px ui-rounded}
-.sb .r{display:flex;gap:5px;font-size:10px;font-weight:800}
-.btn{display:flex;align-items:center;justify-content:center;background:var(--green);color:#fff;border-radius:12px;
-  border-bottom:5px solid var(--green-line);font:900 13px/1 ui-rounded;letter-spacing:.08em;text-transform:uppercase;padding:15px 18px}
-.btn.blue{background:var(--blue);border-bottom-color:var(--blue-d)}
-.btn.ghost{background:#fff;color:var(--blue-d);border:2px solid var(--ln);border-bottom-width:5px}
-.btn.dis{background:#E5E5E5;color:#AFAFAF;border-bottom-color:#CFCFCF}
-.krow{display:flex;align-items:flex-end;gap:4px}
-.kb{background:#fff;border:2px solid var(--ln);border-radius:14px 14px 14px 3px;padding:10px 13px;font:800 12.5px/1.45 ui-rounded;color:var(--eel);position:relative}
-.kb::before{content:"";position:absolute;left:-8px;bottom:14px;width:13px;height:13px;background:#fff;border-left:2px solid var(--ln);border-bottom:2px solid var(--ln);transform:rotate(45deg)}
-.card{background:#fff;border:2px solid var(--ln);border-radius:14px}
-.field{border:2px solid var(--ln);border-radius:12px;padding:13px 14px;font:800 14px ui-rounded;color:var(--eel);background:#fff}
-.field.focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(28,176,246,.18)}
-.chipx{display:inline-block;border-radius:99px;padding:3px 10px;font:900 10px ui-rounded}
-/* dark theme helpers (splash/warm) */
-.dark .btn{border-bottom-color:#3E9200}
+.fhead .no{font:900 11px ui-rounded;color:#131F24;background:#58CC02;border-radius:8px;padding:3px 10px;letter-spacing:.06em}
+.fhead h2{font:900 20px ui-rounded;color:#fff;letter-spacing:-.3px}
+.fhead .ids{font:800 11px ui-rounded;color:#8A93B2}
+.fnarr{font:700 12.5px ui-rounded;color:#8A93B2;max-width:95ch;margin-bottom:16px}
+.srow{display:flex;gap:22px;flex-wrap:wrap}
+.srow figure{margin:0}
+.srow img{width:300px;border-radius:18px;border:1px solid rgba(255,255,255,.12);box-shadow:0 14px 34px rgba(0,0,0,.5);display:block}
+.srow figcaption{font:800 10.5px ui-rounded;color:#8A93B2;margin-top:8px;letter-spacing:.05em}
 </style></head><body>
 <header><div class="in">
-<div class="k">10x LMS · design-from-the-beginning · pack 01</div>
-<h1>Auth pack — flows 1–8, from invite to warm start</h1>
-<p>Theme A (Playful Bold), kit grade. Every screen in the sign-in journey, in order: the message that brings them, the splash, the smart login, verification, the three ways it fails safely, the shared-tablet switcher, and the return. Redline this pack and the language replicates to onboarding next.</p>
-<div class="meta">copy verbatim from Part R (JA-A01…A09) · D-14: phone→SMS OTP / email→magic link · no enumeration · no dead ends · no progress loss</div>
+<div class="k">10x LMS · design-from-the-beginning · pack 01 · v3</div>
+<h1>Auth pack — flows 1–8, rendered as real designs</h1>
+<p>Every screen of the sign-in journey, designed. Theme A · Playful Bold with the 10x space brand on the outer surfaces (invite, splash, offline). Your redlines from v2 are inside: tabs with source-aware default, format-gated CTA, wrong-OTP state, active resend, funny offline Kata, loader tips, 7-day invite.</p>
+<div class="meta">redline anything — these are the designs we build from</div>
 </div></header>
 <main>
-<div class="flow"><div class="fhead"><span class="no">FLOW 1</span><h2>The invite — SMS + email</h2><span class="ids">no app screen · the real first touch</span></div>
-<div class="fnarr">SMS approved as-is. Email rebuilt in the 10x.edu.ge space brand: logo, giant warm heading, violet CTA, stars — and the validity note now reads 7 days from issue.</div><div class="srow"><div><div class="ph"><div class="tag">SMS ✓ kept</div><div class="sb" style="color:#777"><span class="t">9:41</span><span class="r">▮▮▮▮ 84%</span></div>
- <div style="padding:26px 20px;background:#F7F7F7;flex:1">
-  <div style="text-align:center;font:800 11px ui-rounded;color:#AFAFAF;margin-bottom:14px">10X SCHOOL · SMS</div>
-  <div style="background:#E9E9EB;border-radius:16px 16px 16px 4px;padding:11px 14px;max-width:300px;font:700 13px/1.5 ui-rounded;color:#4B4B4B">
-   Nino, your seat at <b>10x</b> is ready 🎓<br>Sign in with this number — one tap:<br>
-   <b style="color:#1899D6">10x.school/j/N-4812</b></div>
-  <div style="background:#E9E9EB;border-radius:16px 16px 16px 4px;padding:11px 14px;max-width:300px;font:700 13px/1.5 ui-rounded;color:#4B4B4B;margin-top:10px">
-   Same link just landed on your email too. Your streak is waiting 😼</div>
- </div></div></div><div><div class="ph dark"><div class="tag">Email · redesigned</div><div style="flex:1;background:#0B0A14;position:relative;overflow:hidden;display:flex;flex-direction:column">
- <div style="position:absolute;inset:0;background:
-  radial-gradient(circle at 12% 18%, rgba(80,87,252,.35), transparent 34%),
-  radial-gradient(circle at 88% 70%, rgba(114,80,252,.28), transparent 40%),
-  radial-gradient(circle at 60% 8%, rgba(80,87,252,.2), transparent 30%)"></div>
- <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.55) 1px,transparent 1px);background-size:34px 34px;opacity:.5"></div>
- <div style="position:relative;z-index:2;padding:18px 20px;display:flex;align-items:center">
-  <div style="font:900 20px ui-rounded;color:#fff;letter-spacing:-.5px">10<span style="color:#7250FC">x</span></div>
-  <div style="margin-left:auto;font:800 9px ui-rounded;color:#8193f8;letter-spacing:.14em">VOCATIONAL COLLEGE · GE</div></div>
- <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 24px">
-  <div style="font:900 10px ui-rounded;letter-spacing:.2em;color:#8193f8">YOU'RE IN — ALMOST</div>
-  <div style="font:900 27px/1.15 ui-rounded;color:#fff;letter-spacing:-.6px;margin-top:8px">Your seat is ready,<br>Nino.</div>
-  <div style="font:700 13px/1.6 ui-rounded;color:#C7CCE8;margin-top:10px;max-width:290px">Your coordinator already created your account — no forms, no passwords. One tap and you're on your path.</div>
-  <div style="margin-top:18px;display:flex;justify-content:center"><div style="background:#5057FC;color:#fff;font:900 14px ui-rounded;letter-spacing:.06em;padding:15px 34px;border-radius:12px;border-bottom:5px solid #072ac8;box-shadow:0 0 30px rgba(80,87,252,.5)">SIGN IN TO 10X</div></div>
-  <div style="font:700 10.5px ui-rounded;color:#8A93B2;text-align:center;margin-top:12px">link works once · valid <b style="color:#C7CCE8">7 days</b> from issue · a fresh one is one message away</div></div>
- <div style="position:relative;z-index:2;padding:14px 24px 20px;display:flex;justify-content:space-between;font:700 9.5px ui-rounded;color:#5A6478"><span>10x.edu.ge</span><span>sent because your school registered you</span></div>
-</div></div></div></div></div><div class="flow"><div class="fhead"><span class="no">FLOW 2</span><h2>Splash → first open</h2><span class="ids">RA-01</span></div>
-<div class="fnarr">Bullshit removed: no "trade", no Rustavi. The loader now behaves like a game loader — a rotating motivational tip for newcomers sits on screen while it checks the session. Offline state: sad Kata + a sentimental joke + Retry.</div><div class="srow"><div><div class="ph dark"><div class="tag">RA-01 · splash + tip</div><div style="flex:1;background:#0B0A14;position:relative;display:flex;flex-direction:column">
- <div style="position:absolute;inset:0;background:radial-gradient(circle at 80% 14%, rgba(80,87,252,.3), transparent 36%),radial-gradient(circle at 10% 80%, rgba(114,80,252,.22), transparent 40%)"></div>
- <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:38px 38px;opacity:.4"></div>
- <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
-  <div style="font:900 48px ui-rounded;color:#fff;letter-spacing:-1.5px">10<span style="color:#7250FC">x</span></div>
-  <div style="font:700 11.5px ui-rounded;color:#8193f8;margin-top:6px;letter-spacing:.08em">learn. practice. ship. repeat.</div></div>
- <div style="position:relative;padding:0 26px 26px">
-  <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:14px 16px">
-   <div style="font:900 9.5px ui-rounded;letter-spacing:.16em;color:#FFC800">TIP WHILE WE LOAD</div>
-   <div style="font:800 13.5px/1.5 ui-rounded;color:#fff;margin-top:6px">Six minutes a day beats a Sunday panic. Your first floor is shorter than this loading bar.</div>
-   <div style="display:flex;gap:5px;margin-top:10px"><i style="width:14px;height:4px;border-radius:99px;background:#5057FC"></i><i style="width:14px;height:4px;border-radius:99px;background:rgba(255,255,255,.2)"></i><i style="width:14px;height:4px;border-radius:99px;background:rgba(255,255,255,.2)"></i></div>
-  </div>
-  <div style="height:6px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:16px"><i style="display:block;height:100%;width:45%;background:#5057FC;border-radius:99px"></i></div>
-  <div style="font:700 10.5px ui-rounded;color:#8193f8;text-align:center;margin-top:10px">checking your session…</div></div>
-</div></div></div><div><div class="ph dark"><div class="tag">RA-01 · offline (funny Kata)</div><div style="flex:1;background:#0B0A14;position:relative;display:flex;flex-direction:column">
- <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:38px 38px;opacity:.4"></div>
- <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 26px;text-align:center">
-  <div style="font:900 44px ui-rounded;color:#fff;letter-spacing:-1px">10<span style="color:#7250FC">x</span></div>
-  <img src="assets/kata/sprites/worried.png" style="width:120px;height:120px;margin-top:14px;filter:drop-shadow(0 0 24px rgba(80,87,252,.45))">
-  <div style="font:900 17px ui-rounded;color:#fff;margin-top:10px">I was about to say something wise.</div>
-  <div style="font:700 12.5px/1.55 ui-rounded;color:#C7CCE8;margin-top:5px;max-width:270px">Then the internet left. It's not you, it's the wifi — your floors are saved right here on the phone.</div></div>
- <div style="position:relative;padding:0 40px 56px"><div class="btn" style="background:#5057FC;border-bottom-color:#072ac8">Retry</div></div>
-</div></div></div></div></div><div class="flow"><div class="fhead"><span class="no">FLOW 3</span><h2>Login — tabs, source-aware</h2><span class="ids">RA-02</span></div>
-<div class="fnarr">SSO row deleted. One field became two tabs (📱 Phone · ✉ Email); the tab defaults to the channel the invite came through. Kata is bigger. The CTA sleeps until the format is valid — shown: empty, invalid (red, disabled, with a helpful hint), valid (active).</div><div class="srow"><div><div class="ph"><div class="tag">phone tab · empty (from SMS)</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div class="krow" style="padding:14px 16px 0"><img src="assets/kata/sprites/warm-teacher.png" style="width:96px;height:96px">
-  <div class="kb" style="font-size:13px">New? Sit anywhere.<br>The register sorts itself.</div></div>
- <div style="padding:14px 20px 0;flex:1">
-  <div style="font:900 22px ui-rounded;color:#131F24;letter-spacing:-.3px">Sign in</div>
-  <div style="font:700 12px ui-rounded;color:#777;margin-top:2px">your number — the one your school has</div>
-  <div style="display:flex;background:#F0F0F0;border-radius:12px;padding:4px;margin-top:14px">
-      <div style="flex:1;text-align:center;font:900 12px ui-rounded;padding:8px;border-radius:9px;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.08);color:#131F24">📱 Phone</div>
-      <div style="flex:1;text-align:center;font:900 12px ui-rounded;padding:8px;border-radius:9px;color:#AFAFAF">✉ Email</div></div>
-  <div class="field" style="margin-top:12px;color:#AFAFAF">+995 555 12 34 56</div>
-  <div class="btn dis" style="margin-top:14px">Continue</div>
-  <div style="font:700 10.5px ui-rounded;color:#AFAFAF;margin-top:10px;text-align:center">from your SMS link · phone pre-selected</div>
- </div>
- <div style="padding:0 20px 26px;text-align:center;font:700 11px ui-rounded;color:#AFAFAF">School gave you credentials? They work right here.</div></div></div><div><div class="ph"><div class="tag">phone tab · invalid + disabled</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div class="krow" style="padding:14px 16px 0"><img src="assets/kata/sprites/warm-teacher.png" style="width:96px;height:96px">
-  <div class="kb" style="font-size:13px">New? Sit anywhere.<br>The register sorts itself.</div></div>
- <div style="padding:14px 20px 0;flex:1">
-  <div style="font:900 22px ui-rounded;color:#131F24;letter-spacing:-.3px">Sign in</div>
-  <div style="font:700 12px ui-rounded;color:#777;margin-top:2px">your number — the one your school has</div>
-  <div style="display:flex;background:#F0F0F0;border-radius:12px;padding:4px;margin-top:14px">
-      <div style="flex:1;text-align:center;font:900 12px ui-rounded;padding:8px;border-radius:9px;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.08);color:#131F24">📱 Phone</div>
-      <div style="flex:1;text-align:center;font:900 12px ui-rounded;padding:8px;border-radius:9px;color:#AFAFAF">✉ Email</div></div>
-  <div class="field" style="margin-top:12px;border-color:#FF4B4B;box-shadow:0 0 0 3px rgba(255,75,75,.15);color:#4B4B4B">+995 12</div>
-        <div style="font:800 11px ui-rounded;color:#FF4B4B;margin-top:7px">that doesn't look like a phone number — 9 digits after +995</div>
-  <div class="btn dis" style="margin-top:14px">Continue</div>
-  <div style="font:700 10.5px ui-rounded;color:#AFAFAF;margin-top:10px;text-align:center">from your SMS link · phone pre-selected</div>
- </div>
- <div style="padding:0 20px 26px;text-align:center;font:700 11px ui-rounded;color:#AFAFAF">School gave you credentials? They work right here.</div></div></div><div><div class="ph"><div class="tag">phone tab · valid → active</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div class="krow" style="padding:14px 16px 0"><img src="assets/kata/sprites/warm-teacher.png" style="width:96px;height:96px">
-  <div class="kb" style="font-size:13px">New? Sit anywhere.<br>The register sorts itself.</div></div>
- <div style="padding:14px 20px 0;flex:1">
-  <div style="font:900 22px ui-rounded;color:#131F24;letter-spacing:-.3px">Sign in</div>
-  <div style="font:700 12px ui-rounded;color:#777;margin-top:2px">your number — the one your school has</div>
-  <div style="display:flex;background:#F0F0F0;border-radius:12px;padding:4px;margin-top:14px">
-      <div style="flex:1;text-align:center;font:900 12px ui-rounded;padding:8px;border-radius:9px;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.08);color:#131F24">📱 Phone</div>
-      <div style="flex:1;text-align:center;font:900 12px ui-rounded;padding:8px;border-radius:9px;color:#AFAFAF">✉ Email</div></div>
-  <div class="field focus" style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;color:#131F24">+995 555 12 34 56<span class="chipx" style="background:#D7FFB8;color:#46A302;border:1.5px solid #58A700">looks right ✓</span></div>
-  <div class="btn" style="margin-top:14px">Text me a code</div>
-  <div style="font:700 10.5px ui-rounded;color:#AFAFAF;margin-top:10px;text-align:center">from your SMS link · phone pre-selected</div>
- </div>
- <div style="padding:0 20px 26px;text-align:center;font:700 11px ui-rounded;color:#AFAFAF">School gave you credentials? They work right here.</div></div></div><div><div class="ph"><div class="tag">email tab · valid → active (from email)</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div class="krow" style="padding:14px 16px 0"><img src="assets/kata/sprites/warm-teacher.png" style="width:96px;height:96px">
-  <div class="kb" style="font-size:13px">New? Sit anywhere.<br>The register sorts itself.</div></div>
- <div style="padding:14px 20px 0;flex:1">
-  <div style="font:900 22px ui-rounded;color:#131F24;letter-spacing:-.3px">Sign in</div>
-  <div style="font:700 12px ui-rounded;color:#777;margin-top:2px">your email — the one your school has</div>
-  <div style="display:flex;background:#F0F0F0;border-radius:12px;padding:4px;margin-top:14px">
-      <div style="flex:1;text-align:center;font:900 12px ui-rounded;padding:8px;border-radius:9px;color:#AFAFAF">📱 Phone</div>
-      <div style="flex:1;text-align:center;font:900 12px ui-rounded;padding:8px;border-radius:9px;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.08);color:#131F24">✉ Email</div></div>
-  <div class="field focus" style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;color:#131F24">nino@gmail.com<span class="chipx" style="background:#D7FFB8;color:#46A302;border:1.5px solid #58A700">looks right ✓</span></div>
-  <div class="btn" style="margin-top:14px">Email me a link</div>
-  <div style="font:700 10.5px ui-rounded;color:#AFAFAF;margin-top:10px;text-align:center">from your email link · email pre-selected</div>
- </div>
- <div style="padding:0 20px 26px;text-align:center;font:700 11px ui-rounded;color:#AFAFAF">School gave you credentials? They work right here.</div></div></div></div></div><div class="flow"><div class="fhead"><span class="no">FLOW 4</span><h2>Verify — OTP / link, with failure states</h2><span class="ids">RA-15 · RA-04</span></div>
-<div class="fnarr">Now with the states you called out: wrong code (red boxes + "not it — 2 tries left"), and the resend-ready state (active "Resend the code" button, "3 resends left today"). The link-sent screen is marked as the email route; validity is 7 days everywhere.</div><div class="srow"><div><div class="ph"><div class="tag">OTP · entering</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div style="padding:22px 22px 0;flex:1">
-  <div style="font:900 20px ui-rounded;color:#131F24">Texted you a code</div>
-  <div style="font:700 12.5px ui-rounded;color:#777;margin-top:3px">+995 ••• •• 34 56 · expires in 10:00</div>
-  <div style="display:flex;gap:9px;margin-top:20px">
-   <div class="field" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0">4</div>
-   <div class="field" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0">8</div>
-   <div class="field" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0">1</div>
-   <div class="field focus" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0;color:#1CB0F6">|</div>
-   <div class="field" style="width:46px;height:56px;background:#F7F7F7"></div>
-   <div class="field" style="width:46px;height:56px;background:#F7F7F7"></div></div>
-  <div style="font:700 11.5px ui-rounded;color:#AFAFAF;margin-top:12px">submits itself at six digits</div></div>
- <div style="padding:0 22px 30px"><div class="btn dis">Verifying…</div>
-  <div style="text-align:center;font:800 11.5px ui-rounded;color:#AFAFAF;margin-top:12px">resend in 0:42</div></div></div></div><div><div class="ph"><div class="tag">OTP · wrong code</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div style="padding:22px 22px 0;flex:1">
-  <div style="font:900 20px ui-rounded;color:#131F24">Texted you a code</div>
-  <div style="font:700 12.5px ui-rounded;color:#777;margin-top:3px">+995 ••• •• 34 56 · expires in 9:12</div>
-  <div style="display:flex;gap:9px;margin-top:20px">
-   <div class="field" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0;border-color:#FF4B4B;box-shadow:0 0 0 3px rgba(255,75,75,.15)">4</div>
-   <div class="field" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0;border-color:#FF4B4B;box-shadow:0 0 0 3px rgba(255,75,75,.15)">8</div>
-   <div class="field" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0;border-color:#FF4B4B;box-shadow:0 0 0 3px rgba(255,75,75,.15)">1</div>
-   <div class="field" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0;border-color:#FF4B4B;box-shadow:0 0 0 3px rgba(255,75,75,.15)">9</div>
-   <div class="field" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0;border-color:#FF4B4B;box-shadow:0 0 0 3px rgba(255,75,75,.15)">0</div>
-   <div class="field" style="width:46px;height:56px;text-align:center;font-size:20px;padding:14px 0;border-color:#FF4B4B;box-shadow:0 0 0 3px rgba(255,75,75,.15)">3</div></div>
-  <div style="font:800 11.5px ui-rounded;color:#FF4B4B;margin-top:12px">not it — check the newest SMS · 2 tries left before a 10-minute pause</div></div>
- <div style="padding:0 22px 30px"><div class="btn" style="background:#fff;color:#1CB0F6;border:2px solid #E5E5E5;border-bottom:5px solid #CFCFCF">Clear &amp; retype</div>
-  <div style="text-align:center;font:800 11.5px ui-rounded;color:#AFAFAF;margin-top:12px">resend in 0:31</div></div></div></div><div><div class="ph"><div class="tag">OTP · resend ready</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div style="padding:22px 22px 0;flex:1">
-  <div style="font:900 20px ui-rounded;color:#131F24">Texted you a code</div>
-  <div style="font:700 12.5px ui-rounded;color:#777;margin-top:3px">+995 ••• •• 34 56 · code expired 0:00 ago</div>
-  <div style="display:flex;gap:9px;margin-top:20px">
-   <div class="field" style="width:46px;height:56px;background:#F7F7F7"></div><div class="field" style="width:46px;height:56px;background:#F7F7F7"></div><div class="field" style="width:46px;height:56px;background:#F7F7F7"></div><div class="field" style="width:46px;height:56px;background:#F7F7F7"></div><div class="field" style="width:46px;height:56px;background:#F7F7F7"></div><div class="field" style="width:46px;height:56px;background:#F7F7F7"></div></div>
-  <div style="font:700 11.5px ui-rounded;color:#AFAFAF;margin-top:12px">nothing landed? that's on us, not you</div></div>
- <div style="padding:0 22px 30px"><div class="btn blue">Resend the code</div>
-  <div style="text-align:center;font:800 11.5px ui-rounded;color:#AFAFAF;margin-top:12px">ready now · 3 resends left today</div></div></div></div><div><div class="ph"><div class="tag">Link sent · email route</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 26px;text-align:center">
-  <img src="assets/kata/sprites/proud.png" style="width:110px;height:110px">
-  <div class="chipx" style="background:#EAF6FE;color:#1899D6;border:1.5px solid #A5DCFF;margin-bottom:6px">✉ email route</div>
-  <div style="font:900 20px ui-rounded;color:#131F24">Check your inbox</div>
-  <div style="font:700 12.5px/1.55 ui-rounded;color:#777;margin-top:6px;max-width:280px">we sent a sign-in link to <b>nino@gmail.com</b>.<br>It works once, for <b>7 days</b>.</div>
-  <div class="btn blue" style="margin-top:18px;width:100%">Open mail app</div>
-  <div class="btn ghost" style="margin-top:10px;width:100%">Send it again</div>
-  <div style="font:700 10.5px ui-rounded;color:#AFAFAF;margin-top:10px">wrong address? your coordinator fixes it in a minute</div>
- </div></div></div></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 5</span><h2>Login failure → recovery</h2><span class="ids">RA-06 · RA-07</span></div>
-<div class="fnarr">Every failure carries exactly one recovery action. Not enrolled → coordinator line; expired link → one-tap resend. No dead ends, no blame.</div><div class="srow"><div><div class="ph"><div class="tag">RA-06 · not enrolled</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div style="flex:1;display:flex;flex-direction:column;padding:22px 22px 0">
-  <img src="assets/kata/sprites/worried.png" style="width:84px;height:84px">
-  <div style="font:900 19px ui-rounded;color:#131F24;margin-top:8px">We don't know this number yet</div>
-  <div style="font:700 12.5px/1.55 ui-rounded;color:#777;margin-top:6px">Your school adds every student by hand — this one isn't on the register. If you just enrolled, give it an hour.</div>
-  <div class="card" style="margin-top:16px;padding:12px 14px">
-   <div style="font:900 12px ui-rounded;color:#131F24">Fastest fix</div>
-   <div style="font:700 11.5px ui-rounded;color:#777;margin-top:2px">Message your coordinator — they add you in a minute.</div></div>
- </div>
- <div style="padding:0 22px 30px">
-  <div class="btn blue">Contact my coordinator</div>
-  <div class="btn ghost" style="margin-top:10px">Try a different number</div></div></div></div><div><div class="ph"><div class="tag">RA-07 · link expired</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div style="flex:1;display:flex;flex-direction:column;padding:22px 22px 0">
-  <img src="assets/kata/sprites/sleepy.png" style="width:84px;height:84px">
-  <div style="font:900 19px ui-rounded;color:#131F24;margin-top:8px">That link expired</div>
-  <div style="font:700 12.5px/1.55 ui-rounded;color:#777;margin-top:6px">Sign-in links live 24 hours and work once. Fresh one takes ten seconds.</div>
- </div>
- <div style="padding:0 22px 30px">
-  <div class="btn">Send a fresh link</div>
-  <div class="btn ghost" style="margin-top:10px">Use my phone instead</div></div></div></div></div></div><div class="flow"><div class="fhead"><span class="no">FLOW 6</span><h2>Session expired → re-auth</h2><span class="ids">RA-11</span></div>
-<div class="fnarr">Non-destructive by law: the overlay asks for a quick check, and the half-typed work underneath survives untouched.</div><div class="srow"><div><div class="ph"><div class="tag">RA-11 · re-auth overlay</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div class="krow" style="padding:16px 16px 0;opacity:.4;filter:saturate(.4)"><img src="assets/kata/sprites/warm-teacher.png" style="width:64px;height:64px"><div class="kb">Floor 13. CSS Flexbox. Six minutes…</div></div>
- <div style="flex:1;opacity:.4;filter:saturate(.4);padding:18px 20px">
-  <div class="card" style="padding:14px"><div style="font:900 13px ui-rounded;color:#131F24">Floor 13 · Flexbox drills</div><div style="font:700 11px ui-rounded;color:#777;margin-top:2px">Q4 · half-typed answer waiting…</div></div></div>
- <div style="position:absolute;inset:0;background:rgba(19,31,36,.5);display:flex;align-items:flex-end;z-index:5">
-  <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;padding:18px 20px 28px;border-top:3px solid #58CC02">
-   <div style="width:38px;height:5px;border-radius:99px;background:#E5E5E5;margin:0 auto 14px"></div>
-   <div style="font:900 17px ui-rounded;color:#131F24">Quick check it's you</div>
-   <div style="font:700 12px/1.5 ui-rounded;color:#777;margin-top:4px">your session timed out. Your half-typed answer is right where you left it — promise.</div>
-   <div class="field focus" style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">+995 555 12 34 56
-    <span class="chipx" style="background:#EAF6FE;color:#1899D6;border:1.5px solid #A5DCFF">this device remembers you</span></div>
-   <div class="btn" style="margin-top:14px">Text me a code</div>
-   <div style="text-align:center;font:800 11px ui-rounded;color:#AFAFAF;margin-top:10px">switch account · bottom left</div>
-  </div></div></div></div></div></div><div class="flow"><div class="fhead"><span class="no">FLOW 7</span><h2>Shared tablet → switcher</h2><span class="ids">RA-08 · RA-09</span></div>
-<div class="fnarr">Two accounts cached on the class tablet, one tap apart. Switching never loses anyone’s in-flight work.</div><div class="srow"><div><div class="ph"><div class="tag">RA-08 · account switcher</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div style="padding:22px 22px 0;flex:1">
-  <div style="font:900 20px ui-rounded;color:#131F24">Who's learning?</div>
-  <div style="font:700 12px ui-rounded;color:#777;margin-top:3px">this tablet remembers two of you</div>
-  <div class="card" style="margin-top:16px;padding:13px 14px;display:flex;gap:11px;align-items:center;border-color:#1CB0F6;box-shadow:0 0 0 3px rgba(28,176,246,.15)">
-   <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#1CB0F6);color:#fff;display:flex;align-items:center;justify-content:center;font:900 15px ui-rounded">N</div>
-   <div><div style="font:900 13.5px ui-rounded;color:#131F24">Nino K.</div><div style="font:700 10.5px ui-rounded;color:#777">🔥 12 · Programming</div></div>
-   <span class="chipx" style="margin-left:auto;background:#D7FFB8;color:#46A302">current</span></div>
-  <div class="card" style="margin-top:10px;padding:13px 14px;display:flex;gap:11px;align-items:center">
-   <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FF9600,#FFC800);color:#fff;display:flex;align-items:center;justify-content:center;font:900 15px ui-rounded">M</div>
-   <div><div style="font:900 13.5px ui-rounded;color:#131F24">Mariam T.</div><div style="font:700 10.5px ui-rounded;color:#777">🔥 4 · Culinary</div></div>
-   <span style="margin-left:auto;font:900 14px ui-rounded;color:#AFAFAF">›</span></div>
-  <div class="btn ghost" style="margin-top:16px">+ Add account</div>
- </div>
- <div style="padding:0 22px 26px;text-align:center;font:700 10.5px ui-rounded;color:#AFAFAF">each of you keeps your own streak, floors and coins — always</div></div></div><div><div class="ph"><div class="tag">RA-09 · switch confirm</div><div class="sb"><span class="t">9:41</span><span class="r">▮▮▮▮</span></div>
- <div style="flex:1;opacity:.45;filter:saturate(.5);padding:22px 22px 0">
-  <div style="font:900 20px ui-rounded;color:#131F24">Who's learning?</div>
-  <div class="card" style="margin-top:16px;padding:13px 14px">…</div></div>
- <div style="position:absolute;inset:0;background:rgba(19,31,36,.45);display:flex;align-items:flex-end;z-index:5">
-  <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;padding:18px 20px 28px">
-   <div style="width:38px;height:5px;border-radius:99px;background:#E5E5E5;margin:0 auto 14px"></div>
-   <div style="font:900 16px ui-rounded;color:#131F24">Switch to Mariam?</div>
-   <div style="font:700 12px/1.5 ui-rounded;color:#777;margin-top:4px">Nino's session pauses mid-floor 13 — nothing is lost, nothing mixes.</div>
-   <div class="btn" style="margin-top:14px">Switch — hi Mariam 👋</div>
-   <div class="btn ghost" style="margin-top:10px">Stay Nino</div>
-  </div></div></div></div></div></div><div class="flow"><div class="fhead"><span class="no">FLOW 8</span><h2>Warm start — returning user</h2><span class="ids">RA-10</span></div>
-<div class="fnarr">A valid session skips login entirely: brand ≤1s, silent sync pill, and straight into the path with yesterday intact.</div><div class="srow"><div><div class="ph dark"><div class="tag">RA-10 · warm start</div><div style="flex:1;background:#131F24;display:flex;flex-direction:column;align-items:center;justify-content:center">
-  <div style="font:900 46px ui-rounded;color:#fff;letter-spacing:-1px">10x</div>
-  <div style="font:700 12px ui-rounded;color:#7E8FA8;margin-top:6px">your trade, ten times faster</div>
-  <div style="margin-top:22px;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:99px;padding:6px 13px">
-   <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#1CB0F6);color:#fff;display:flex;align-items:center;justify-content:center;font:900 9px ui-rounded">N</div>
-   <div style="font:800 11px ui-rounded;color:#DCE4FF">welcome back, Nino · 🔥 12</div></div>
-  <div style="font:700 10.5px ui-rounded;color:#5A6B8C;margin-top:12px">syncing your floors…</div></div>
- <div style="background:#131F24;padding:0 40px 60px">
-  <div style="height:6px;border-radius:99px;background:#26324E;overflow:hidden"><i style="display:block;height:100%;width:82%;background:#58CC02;border-radius:99px"></i></div>
-  <div style="font:700 10.5px ui-rounded;color:#7E8FA8;text-align:center;margin-top:10px">opening your path → RC-01</div></div></div></div></div></div>
-
-</main>
-</body></html>
+<div class="flow"><div class="fhead"><span class="no">FLOW 1</span><h2>The invite — SMS + email</h2><span class="ids">message + email · the first touch</span></div><div class="fnarr">SMS as approved. The email now wears the 10x space brand: logo, giant warm heading, glowing violet CTA, and "valid 7 days from issue".</div><div class="srow"><figure><img src="assets/design/auth/sms.png"><figcaption>SMS ✓ approved</figcaption></figure>
+<figure><img src="assets/design/auth/email.png"><figcaption>Email · redesigned</figcaption></figure></div></div>
+<div class="flow"><div class="fhead"><span class="no">FLOW 2</span><h2>Splash → first open</h2><span class="ids">RA-01</span></div><div class="fnarr">No "trade", no Rustavi. A game-loader: brand + one rotating motivational tip for newcomers while the session checks. Offline = sad Kata + a sentimental joke + Retry.</div><div class="srow"><figure><img src="assets/design/auth/splash.png"><figcaption>RA-01 · splash + loader tip</figcaption></figure><figure><img src="assets/design/auth/offline.png"><figcaption>RA-01 · offline · funny Kata</figcaption></figure></div></div>
+<div class="flow"><div class="fhead"><span class="no">FLOW 3</span><h2>Login — tabs, source-aware</h2><span class="ids">RA-02</span></div><div class="fnarr">Big Kata. Phone/Email tabs; the tab defaults to the invite channel. CTA sleeps until the format is valid; invalid shows red + a helpful hint + a disabled button.</div><div class="srow"><figure><img src="assets/design/auth/login.png"><figcaption>RA-02 · phone tab · valid → active</figcaption></figure>
+<figure><img src="assets/design/auth/login-invalid.png"><figcaption>RA-02 · invalid format → CTA asleep</figcaption></figure>
+<figure><img src="assets/design/auth/login-email.png"><figcaption>RA-02 · email tab (from email link) → active</figcaption></figure></div></div>
+<div class="flow"><div class="fhead"><span class="no">FLOW 4</span><h2>Verify — OTP / link + failure states</h2><span class="ids">RA-15 · RA-04</span></div><div class="fnarr">Entering (auto-advance, self-submit at six), the wrong-code state (red boxes, "not it — 2 tries left"), the resend-ready state (active button + 3 left today), and the email link-sent card marked as the email route, 7-day validity.</div><div class="srow"><figure><img src="assets/design/auth/otp.png"><figcaption>OTP · resend ready (active button)</figcaption></figure><figure><img src="assets/design/auth/otp-wrong.png"><figcaption>OTP · wrong code</figcaption></figure><figure><img src="assets/design/auth/email.png"><figcaption>RA-04 · link sent · email route</figcaption></figure></div></div>
+<div class="flow"><div class="fhead"><span class="no">FLOW 5</span><h2>Login failure → recovery</h2><span class="ids">RA-06 · RA-07</span></div><div class="fnarr">Not enrolled → coordinator line. Expired → fresh link in ten seconds. One recovery action each, no dead ends.</div><div class="srow"><figure><img src="assets/design/auth/not-enrolled.png"><figcaption>RA-06 · not enrolled</figcaption></figure><figure><img src="assets/design/auth/expired.png"><figcaption>RA-07 · link expired</figcaption></figure></div></div>
+<div class="flow"><div class="fhead"><span class="no">FLOW 6</span><h2>Session expired → re-auth</h2><span class="ids">RA-11</span></div><div class="fnarr">Non-destructive: dimmed half-typed floor underneath, "Quick check it is you", the promise nothing was lost.</div><div class="srow"><figure><img src="assets/design/auth/reauth.png"><figcaption>RA-11 · re-auth overlay</figcaption></figure></div></div>
+<div class="flow"><div class="fhead"><span class="no">FLOW 7</span><h2>Shared tablet → switcher</h2><span class="ids">RA-08 · RA-09</span></div><div class="fnarr">Two accounts one tap apart; switching never mixes or loses anyone’s work.</div><div class="srow"><figure><img src="assets/design/auth/switcher.png"><figcaption>RA-08 · account switcher</figcaption></figure></div></div>
+<div class="flow"><div class="fhead"><span class="no">FLOW 8</span><h2>Warm start — returning user</h2><span class="ids">RA-10</span></div><div class="fnarr">Valid session skips login: brand ≤1s, "welcome back, Nino · 🔥 12" pill, syncing bar, straight into the path.</div><div class="srow"><figure><img src="assets/design/auth/warmstart.png"><figcaption>RA-10 · warm start</figcaption></figure></div></div>
+</main></body></html>
