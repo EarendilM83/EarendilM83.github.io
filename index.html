@@ -1,77 +1,144 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10x LMS — the PRD hub (one document, mapped)</title><style>
+<title>10x LMS — the PRD hub (live progress)</title><style>
 *{box-sizing:border-box;margin:0}
-body{background:#11142A;font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#E9ECF7}
-header{background:#0B0E1E;border-bottom:1px solid rgba(255,255,255,.08);padding:26px 0 22px}
-header .in{max-width:1500px;margin:0 auto;padding:0 26px}
-.kick{font:900 10px ui-rounded;letter-spacing:.18em;color:#FFC800;text-transform:uppercase}
-header h1{font:900 26px ui-rounded;letter-spacing:-.4px;margin:8px 0 6px;color:#fff}
-header p{color:#A9B4D8;font:700 12.5px ui-rounded;max-width:78ch}
+body{background:#F4F6FC;color:#101636;font:13.5px/1.55 ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px 80px}
+header{background:#0C1736;color:#fff;padding:34px 0 26px}
+header .in{max-width:1060px;margin:0 auto;padding:0 20px}
+.kick{font:900 10px ui-rounded;letter-spacing:.16em;color:#FFC800;text-transform:uppercase}
+h1{font:900 27px ui-rounded;letter-spacing:-.4px;margin:6px 0 4px}
+.sub{color:#C7D2F2;font:700 12.5px ui-rounded;max-width:75ch}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .chips span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:3px 11px;font:800 10.5px ui-rounded;color:#DCE4FF}
-main{max-width:1500px;margin:0 auto;padding:34px 26px 100px}
-.progbar{background:#171B33;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 18px;margin-bottom:34px}
-.progbar .t{font:900 11px ui-rounded;color:#FFC800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-.pb{height:10px;border-radius:99px;background:#0B0E1E;overflow:hidden}
-.pb i{display:block;height:100%;width:25%;background:linear-gradient(90deg,#58CC02,#86E05A);border-radius:99px}
-.pn{font:700 10.5px ui-rounded;color:#8FA0CC;margin-top:6px}
-.eplock{background:#171B33;border:1px solid rgba(88,204,2,.4);border-radius:12px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-.eplock .b{width:22px;height:22px;border-radius:50%;background:#58CC02;color:#fff;display:flex;align-items:center;justify-content:center;font:900 11px ui-rounded}
-.eplock .t{font:900 13px ui-rounded;color:#fff}
-.eplock .d{font:600 10.5px ui-rounded;color:#8A93B2}
-.eplock a{margin-left:auto;background:#58CC02;color:#131F24;font:900 10.5px ui-rounded;padding:5px 12px;border-radius:8px;text-decoration:none;border-bottom:3px solid #46A302}
-.eplock2{background:#171B33;border:1px solid rgba(255,150,0,.4);border-radius:12px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-.eplock2 .b{width:22px;height:22px;border-radius:50%;background:#FF9600;color:#fff;display:flex;align-items:center;justify-content:center;font:900 11px ui-rounded}
-.eplock2 .t{font:900 13px ui-rounded;color:#fff}
-.eplock2 .d{font:600 10.5px ui-rounded;color:#8A93B2}
-.eplock2 .st{margin-left:auto;font:900 9.5px ui-rounded;color:#CC7800;background:#FFF0DB;border-radius:99px;padding:3px 10px}
-.qrow{display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:7px 12px;margin-bottom:6px;opacity:.55}
-.qrow .b{width:20px;height:20px;border-radius:50%;background:#26324E;color:#8A93B2;display:flex;align-items:center;justify-content:center;font:900 10px ui-rounded}
-.qrow .t{font:800 12px ui-rounded;color:#C7D2F2}
-.qrow .d{font:600 10.5px ui-rounded;color:#68709A}
-.qrow .st{margin-left:auto;font:900 9px ui-rounded;color:#8A93B2;background:rgba(255,255,255,.06);border-radius:99px;padding:3px 9px}
-.flow{margin-bottom:64px}
-.fhead{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap}
-.fhead .no{font:900 11px ui-rounded;color:#131F24;background:#58CC02;border-radius:8px;padding:3px 10px;letter-spacing:.06em}
-.fhead h2{font:900 20px ui-rounded;color:#fff;letter-spacing:-.3px}
-.fhead .ids{font:800 11px ui-rounded;color:#8A93B2}
-.fnarr{font:700 12.5px ui-rounded;color:#8A93B2;max-width:95ch;margin-bottom:16px}
-.srow{display:flex;gap:22px;flex-wrap:wrap}
-.srow figure{margin:0}
-.srow figure .pf{width:252px;height:452px;border-radius:30px;overflow:hidden;position:relative;background:#fff;border:1.5px solid rgba(255,255,255,.16);box-shadow:0 16px 36px rgba(0,0,0,.5)}
-.srow figure .pf img{width:100%;height:100%;object-fit:cover;display:block}
-.srow figcaption{font:800 10.5px ui-rounded;color:#8A93B2;margin-top:8px;letter-spacing:.05em;max-width:252px}
-.seclabel{font:900 13px ui-rounded;color:#FFC800;letter-spacing:.12em;text-transform:uppercase;margin:30px 0 14px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.1)}
+/* progress */
+.prog{background:#fff;border:1px solid #D9E2F3;border-radius:16px;padding:18px 20px;margin:26px 0 8px;box-shadow:0 2px 8px rgba(12,23,54,.06)}
+.prog h2{font:900 15px ui-rounded;margin-bottom:4px}
+.pbar{height:12px;border-radius:99px;background:#E9EEFA;overflow:hidden;margin:10px 0 4px}
+.pbar i{display:block;height:100%;width:17%;background:linear-gradient(90deg,#58CC02,#86E05A);border-radius:99px}
+.pnote{font:800 10.5px ui-rounded;color:#8A93B2;margin-bottom:12px}
+.ladder{display:flex;flex-direction:column;gap:7px}
+.step{display:flex;align-items:center;gap:12px;border:2px solid #E9EEFA;border-radius:12px;padding:9px 13px}
+.step .badge{flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:900 11px ui-rounded}
+.step.done .badge{background:#58CC02;color:#fff}
+.step.cook .badge{background:#FF9600;color:#fff}
+.step.wait .badge{background:#E5E5E5;color:#AFAFAF}
+.step .tt{font:800 12.5px ui-rounded;color:#131F24}
+.step .dd{font:600 10.5px ui-rounded;color:#8A93B2}
+.step .sp{flex:1}
+.step a{font:900 11px ui-rounded;text-decoration:none;padding:6px 12px;border-radius:9px;white-space:nowrap}
+.step.done a{background:#58CC02;color:#fff;border-bottom:3px solid #46A302}
+.step.cook .st{font:900 10px ui-rounded;color:#CC7800;background:#FFF0DB;border-radius:99px;padding:4px 10px}
+.step.wait .st{font:900 10px ui-rounded;color:#AFAFAF;background:#F0F0F0;border-radius:99px;padding:4px 10px}
+.step.wait{opacity:.55}
+.step a .lk{font:900 10px ui-rounded;color:#46A302;margin-left:6px}
+/* sections */
+.sect{margin-top:30px}
+.sect h2{font:900 16px ui-rounded;margin-bottom:4px}
+.sect .lead{font:600 11.5px ui-rounded;color:#5A6478;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;border:1px solid #D9E2F3}
+th{background:#0C1736;color:#fff;font:800 10.5px ui-rounded;text-align:left;padding:9px 12px;letter-spacing:.05em}
+td{padding:8px 12px;border-bottom:1px solid #EEF1F8;font-size:12px;vertical-align:top}
+td b{font-weight:800}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;border-radius:99px;padding:2px 9px;font:900 9px ui-rounded;white-space:nowrap}
+.p-cur{background:#DDF5E8;color:#17804F}.p-lock{background:#D9E4FF;color:#1557C8}.p-hist{background:#F0F0F0;color:#8A93B2}.p-stale{background:#FFF0DB;color:#B98A00}
+a.doc{color:#1557C8;font-weight:800;text-decoration:none}
+a.doc:hover{text-decoration:underline}
+.grid5{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.card5{background:#fff;border:2px solid #E9EEFA;border-radius:14px;padding:13px 14px;text-decoration:none;color:#101636;box-shadow:0 2px 6px rgba(12,23,54,.05)}
+.card5 b{display:block;font:900 12.5px ui-rounded;color:#131F24;margin-bottom:2px}
+.card5 span{font:600 10.5px ui-rounded;color:#8A93B2}
+.card5:hover{border-color:#58CC02}
+.foot{margin-top:34px;font:600 10.5px ui-rounded;color:#8A93B2;border-top:1px solid #E4E9F6;padding-top:12px}
 </style></head><body>
 <header><div class="in">
-<div class="kick">10x LMS · the one document · mapped</div>
-<h1>The PRD hub — the whole journey in one file</h1>
-<p>Every flow in order, with its real designs full-size and its story beside it. Done flows are open; queued flows are locked until cooked. This file IS the progress map and the design library in one.</p>
-<div class="chips"><span>PRD v2.5 locked</span><span>Build contract v1.0</span><span>Theme A locked</span><span>Epic 1 ✅ · Epic 2 🟡 redline</span><span>131 flows · 173 screens · 534 wireframes</span></div>
+<div class="kick">10x LMS · the one document · live progress</div>
+<h1>The PRD hub</h1>
+<p class="sub">Everything about the product, one page. Links are active where work is DONE; queued items are disabled until cooked. Read this instead of agent logs.</p>
+<div class="chips"><span>PRD v2.5 locked</span><span>Build contract v1.0</span><span>Theme A locked</span><span>Epic 1 ✅ · Epic 2 🟡</span><span>131 flows · 173 screens · 534 wireframes</span></div>
 </div></header>
-<main>
-<div class="progbar"><div class="t">Build progress</div><div class="pb"><i></i></div><div class="pn">2 of 12 epics designed · 1 fully locked (designs + contract) · queued flows unlock as we cook them</div></div>
+<div class="wrap">
 
-<div class="eplock"><span class="b">✓</span><div><div class="t">EPIC 1 · Authentication (flows 1–8) — locked</div><div class="d">designs approved 2026-08-17 · contract written · 8 flows, 16 screens</div></div><a href="epics/EPIC-01-authentication.md">epic ↗</a></div>
-<div class="seclabel">Epic 1 · flows 1–8 — the designs</div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 1</span><h2>The invite — SMS + email</h2><span class="ids">no app screen · the real first touch</span></div><div class="fnarr">Both channels fire together at provisioning. SMS approved as-is; the email wears the 10x space brand: logo, giant warm heading, glowing violet CTA, "valid 7 days from issue".</div><div class="srow"><figure><div class="pf"><img src="assets/design/auth/sms.png"></div><figcaption>SMS ✓ approved</figcaption></figure><figure><div class="pf"><img src="assets/design/auth/email.png"></div><figcaption>Email · redesigned</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 2</span><h2>Splash → first open</h2><span class="ids">RA-01</span></div><div class="fnarr">A game-loader: brand + one rotating motivational tip for newcomers while the session checks. Offline: sad Kata + a sentimental joke + Retry as the only action.</div><div class="srow"><figure><div class="pf"><img src="assets/design/auth/splash.png"></div><figcaption>RA-01 · splash + loader tip</figcaption></figure><figure><div class="pf"><img src="assets/design/auth/offline.png"></div><figcaption>RA-01 · offline · funny Kata</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 3</span><h2>Login — tabs, source-aware</h2><span class="ids">RA-02</span></div><div class="fnarr">Big Kata. Phone/Email tabs; the tab defaults to the invite channel. CTA sleeps until the format is valid; invalid shows red + a helpful hint + a disabled button. SSO row deleted.</div><div class="srow"><figure><div class="pf"><img src="assets/design/auth/login.png"></div><figcaption>RA-02 · phone tab · valid → active</figcaption></figure><figure><div class="pf"><img src="assets/design/auth/login-invalid.png"></div><figcaption>RA-02 · invalid → CTA asleep</figcaption></figure><figure><div class="pf"><img src="assets/design/auth/login-email.png"></div><figcaption>RA-02 · email tab → active</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 4</span><h2>Verify — OTP / link + failure states</h2><span class="ids">RA-15 · RA-04</span></div><div class="fnarr">Entering (auto-advance, self-submit at six), wrong code (red boxes, "not it — 2 tries left"), resend-ready (active button + 3 left today), and the email link-sent card marked as the email route, 7-day validity.</div><div class="srow"><figure><div class="pf"><img src="assets/design/auth/otp.png"></div><figcaption>OTP · resend ready (active)</figcaption></figure><figure><div class="pf"><img src="assets/design/auth/otp-wrong.png"></div><figcaption>OTP · wrong code</figcaption></figure><figure><div class="pf"><img src="assets/design/auth/email.png"></div><figcaption>RA-04 · link sent · email route</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 5</span><h2>Login failure → recovery</h2><span class="ids">RA-06 · RA-07</span></div><div class="fnarr">Not enrolled → coordinator line. Expired → fresh link in ten seconds. One recovery action each, no dead ends.</div><div class="srow"><figure><div class="pf"><img src="assets/design/auth/not-enrolled.png"></div><figcaption>RA-06 · not enrolled</figcaption></figure><figure><div class="pf"><img src="assets/design/auth/expired.png"></div><figcaption>RA-07 · link expired</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 6</span><h2>Session expired → re-auth</h2><span class="ids">RA-11</span></div><div class="fnarr">Non-destructive: dimmed half-typed floor underneath, "Quick check it is you", the promise nothing was lost.</div><div class="srow"><figure><div class="pf"><img src="assets/design/auth/reauth.png"></div><figcaption>RA-11 · re-auth overlay</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 7</span><h2>Shared tablet → switcher</h2><span class="ids">RA-08 · RA-09</span></div><div class="fnarr">Two accounts one tap apart; switching never mixes or loses anyone's work.</div><div class="srow"><figure><div class="pf"><img src="assets/design/auth/switcher.png"></div><figcaption>RA-08 · account switcher</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 8</span><h2>Warm start — returning user</h2><span class="ids">RA-10</span></div><div class="fnarr">Valid session skips login: brand ≤1s, "welcome back, Nino · 🔥 12" pill, syncing bar, straight into the path.</div><div class="srow"><figure><div class="pf"><img src="assets/design/auth/warmstart.png"></div><figcaption>RA-10 · warm start</figcaption></figure></div></div>
-<div class="eplock2"><span class="b">…</span><div><div class="t">EPIC 2 · Onboarding (flows 9–18) — in redline</div><div class="d">30 screens rendered · awaiting your redline → lock → EPIC-02 contract</div></div><span class="st">in redline</span></div>
-<div class="seclabel">Epic 2 · flows 9–18 — the designs</div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 9</span><h2>Meet Kata — her job, printed</h2><span class="ids">RB-00</span></div><div class="fnarr">Before any form, Kata says what she actually does — as a swipeable jobs carousel (Instagram-style), one job per card: quest nudges, class reminders, official updates, exam warnings, and the help button that lives in every flow.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/kata-role.png"></div><figcaption>Job card 1/5 · quest nudges</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/kata-role-2.png"></div><figcaption>Job card 4/5 · exam warnings</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 10</span><h2>Your first 10 minutes — the roadmap</h2><span class="ids">RB-01</span></div><div class="fnarr">The setup as a candy-crush map that scales to any step count: 12+ nodes, scrollable — done green-checked, locked grey — the NEXT step glowing with a "NEXT" tag, and tapping a node opens a tooltip modal (title · est. time · START + confirm). Course access granted up front: content, schedule, your group, the processes.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/roadmap-v2.png"></div><figcaption>Candy-crush map · 12+ steps</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/roadmap-tooltip.png"></div><figcaption>Tap node → tooltip modal</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 11</span><h2>Pick your pace — informative, not tiers</h2><span class="ids">RB-02</span></div><div class="fnarr">The carousel stays, the tier branding is gone. Plain time options (~10/~20/~30/~60/~90+ min) with the same honest outcomes for everyone — the student picks the time that is honest, not a badge. Admin-configurable later.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/pace-v2.png"></div><figcaption>Pace carousel · informative</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 12</span><h2>Choice summary + welcome rewards</h2><span class="ids">RB-03</span></div><div class="fnarr">The choice summarized with the honest rules AND the warning: changeable anytime, scoring follows investment + completed tasks, switching never costs the streak — ⚠ but each pace change moves your rating · free change available once a month. Gifts: +2 streak freezes, +50 aura points.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/reward-summary.png"></div><figcaption>Summary + warning + gifts</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 13</span><h2>Rating — chess.com model, leagues by rating</h2><span class="ids">RB-04 · rating</span></div><div class="fnarr">Everyone starts at 1000. Learning, tasks, showing up push it up; skipped quizzes, missed lectures, silence pull it down. Leagues: Wooden · Iron · Bronze · Silver (everyone starts here) · Gold · Platinum · Obsidian. Exact scoring model documented by the team later.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/rating-explainer.png"></div><figcaption>Rating 1000 + league ladder</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 14</span><h2>Placement quizzes — content + integrity</h2><span class="ids">RB-05 · quizzes</span></div><div class="fnarr">Two things live here: the school-configured placement quiz, and the English check A2→C2 (set from back-office). Integrity rule: you may leave and resume — but never mid-quiz; over 1 minute away = inactivity error, the quiz closes, onboarding quizzes restart. Answers are never graded mid-quiz.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/placement-quiz.png"></div><figcaption>Placement question 3/6</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/english-test.png"></div><figcaption>English check · A2→C2</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/inactivity-error.png"></div><figcaption>Inactivity error → restart</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 15</span><h2>The streak, honestly + the pet's scars</h2><span class="ids">RB-06 · streak</span></div><div class="fnarr">The truth, no padding: complete daily activities or the streak resets to zero — streak freezes on your balance are the only automatic save. And it's just Rating (1000 at start), moving only with activity. Kata carries the consequence visibly: every broken streak leaves a scar on him — a freeze prevents it.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/streak-truth.png"></div><figcaption>Streak rules, honest</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/pet-scars.png"></div><figcaption>Kata's scars = your broken streaks</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 16</span><h2>Week contract + wave preference</h2><span class="ids">RB-07</span></div><div class="fnarr">Pick your contract days AND your wave (morning ☀ / evening 🌙). The note is honest: group waves are decided by administration — they'll try to consider your preference when forming groups.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/week-contract-waves.png"></div><figcaption>Contract + wave toggle</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 17</span><h2>GitHub connect — conditional</h2><span class="ids">RP-01</span></div><div class="fnarr">Programming courses only (skipped for culinary/hospitality/management/short courses). The full connect flow: OAuth consent on github.com (read-only repos, listed permissions) → pick which repos count → linked ✓ (pushes from ANY device or client count — the webhook hears the repo, not the app) → first commit verified and +15⚡ credited, with the honest offline queue. Unlink anytime, under 5 seconds.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/github-connect.png"></div><figcaption>Connect or skip (dev only)</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/gh-oauth.png"></div><figcaption>Step 1 · OAuth consent</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/gh-repos.png"></div><figcaption>Step 2 · pick repos</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/gh-linked.png"></div><figcaption>Step 3 · linked ✓</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/gh-credit.png"></div><figcaption>Step 4 · commit verified → +15⚡</figcaption></figure></div></div>
-<div class="flow"><div class="fhead"><span class="no">FLOW 18</span><h2>Archetype — the REAL 16personalities test, connected</h2><span class="ids">RB-12 · RB-13 · D-17</span></div><div class="fnarr">Not our questions — their test is proprietary and legally off-limits to host. So the flow is the official connector: the card tells the truth (60 questions · ~10 min · free · opens on their site), the handoff holds your place while you take it, you come back with your 4 letters, a guided picker validates the type (ENFP-A), and Kata gives her personal read of The Campaigner. Skip stays one tap away — Kata coaches fine without it. Retake anytime.</div><div class="srow"><figure><div class="pf"><img src="assets/design/onboarding/arch-connect.png"></div><figcaption>Card · "the official test" (external)</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/arch-handoff.png"></div><figcaption>Handoff · "come back with your 4 letters"</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/arch-entry.png"></div><figcaption>Type picker · E N F P -A validated</figcaption></figure><figure><div class="pf"><img src="assets/design/onboarding/arch-read.png"></div><figcaption>Kata's read · ENFP-A The Campaigner</figcaption></figure></div></div>
-<div class="seclabel">Queued — locked until cooked</div><div class="qrow"><span class="b">3</span><div><span class="t">EPIC 3 · Daily loop</span></div><div class="d">· roadmap home, floors, feedback, summary, offline, resume</div><span class="st">queued</span></div><div class="qrow"><span class="b">4</span><div><span class="t">EPIC 4 · Classroom</span></div><div class="d">· dashboard, calendar, course, sessions, grades, exams, forms, attendance</div><span class="st">queued</span></div><div class="qrow"><span class="b">5</span><div><span class="t">EPIC 5 · Assignments</span></div><div class="d">· detail, submit, status, graded</div><span class="st">queued</span></div><div class="qrow"><span class="b">6</span><div><span class="t">EPIC 6 · Events & careers</span></div><div class="d">· feed, save, pin, apply</div><span class="st">queued</span></div><div class="qrow"><span class="b">7</span><div><span class="t">EPIC 7 · Social & league</span></div><div class="d">· league, podium, friends, buddy, cohort feed</div><span class="st">queued</span></div><div class="qrow"><span class="b">8</span><div><span class="t">EPIC 8 · Progression & economy</span></div><div class="d">· mistakes, review, quests, chests, shop, streak engine, boss, checkpoints</div><span class="st">queued</span></div><div class="qrow"><span class="b">9</span><div><span class="t">EPIC 9 · Outcomes</span></div><div class="d">· assessment, certificate, DocFlow, statements, alumni</div><span class="st">queued</span></div><div class="qrow"><span class="b">10</span><div><span class="t">EPIC 10 · Settings & system</span></div><div class="d">· settings, notifications, profile, reports, privacy, edge states</div><span class="st">queued</span></div><div class="qrow"><span class="b">11</span><div><span class="t">Build batches B1–B9</span></div><div class="d">· the app itself on the existing LMS</div><span class="st">queued</span></div><div class="qrow"><span class="b">12</span><div><span class="t">Pilot → national rollout</span></div><div class="d">· 10X first, then all Georgian VET colleges</div><span class="st">queued</span></div></main></body></html>
+<!-- PROGRESS LADDER -->
+<div class="prog">
+<h2>Build progress — epics, in order</h2>
+<div class="pbar"><i></i></div>
+<div class="pnote">2 of 12 epics designed · 1 fully locked (designs + contract)</div>
+<div class="ladder">
+<div class="step done"><span class="badge">✓</span><div><div class="tt">EPIC 1 · Authentication (flows 1–8)</div><div class="dd">designs approved · contract written</div></div><span class="sp"></span><a href="design-auth-pack.html">designs ↗</a><a href="epics/EPIC-01-authentication.md">epic ↗</a></div>
+<div class="step cook"><span class="badge">…</span><div><div class="tt">EPIC 2 · Onboarding (flows 9–18)</div><div class="dd">27 screens rendered · awaiting your redline</div></div><span class="sp"></span><a href="design-onboarding-pack.html" style="background:#FF9600;color:#fff;border-bottom:3px solid #CC7800;font:900 11px ui-rounded;text-decoration:none;padding:6px 12px;border-radius:9px">review ↗</a><span class="st">in redline</span></div>
+<div class="step wait"><span class="badge">3</span><div><div class="tt">EPIC 3 · Daily loop (flows 19–30)</div><div class="dd">roadmap home, floors, feedback, summary, offline, resume</div></div><span class="sp"></span><span class="st">queued</span></div>
+<div class="step wait"><span class="badge">4</span><div><div class="tt">EPIC 4 · Classroom (flows 31–41)</div><div class="dd">dashboard, calendar, course, sessions, grades, exams, forms, attendance</div></div><span class="sp"></span><span class="st">queued</span></div>
+<div class="step wait"><span class="badge">5</span><div><div class="tt">EPIC 5 · Assignments (flows 42–45)</div><div class="dd">detail, submit, status, graded</div></div><span class="sp"></span><span class="st">queued</span></div>
+<div class="step wait"><span class="badge">6</span><div><div class="tt">EPIC 6 · Events & careers (flow 46)</div><div class="dd">feed, save, pin, apply</div></div><span class="sp"></span><span class="st">queued</span></div>
+<div class="step wait"><span class="badge">7</span><div><div class="tt">EPIC 7 · Social & league (flows 47–51)</div><div class="dd">league, podium, friends, buddy, cohort feed</div></div><span class="sp"></span><span class="st">queued</span></div>
+<div class="step wait"><span class="badge">8</span><div><div class="tt">EPIC 8 · Progression & economy (flows 52–61)</div><div class="dd">mistakes, review, quests, chests, shop, streak engine, boss, checkpoints</div></div><span class="sp"></span><span class="st">queued</span></div>
+<div class="step wait"><span class="badge">9</span><div><div class="tt">EPIC 9 · Outcomes (flows 62–66)</div><div class="dd">assessment, certificate, DocFlow, statements, alumni</div></div><span class="sp"></span><span class="st">queued</span></div>
+<div class="step wait"><span class="badge">10</span><div><div class="tt">EPIC 10 · Settings & system (flows 67–72)</div><div class="dd">settings, notifications, profile, reports, privacy, edge states</div></div><span class="sp"></span><span class="st">queued</span></div>
+<div class="step wait"><span class="badge">11</span><div><div class="tt">Build batches B1–B9 (engineering)</div><div class="dd">the app itself on the existing LMS</div></div><span class="sp"></span><span class="st">queued</span></div>
+<div class="step wait"><span class="badge">12</span><div><div class="tt">Pilot → national rollout</div><div class="dd">10X first, then all Georgian VET colleges</div></div><span class="sp"></span><span class="st">queued</span></div>
+</div></div>
+
+<!-- START HERE -->
+<div class="sect"><h2>Start here</h2><p class="lead">The five documents that carry the product.</p>
+<div class="grid5">
+<a class="card5" href="../10x-LMS-Product-PRD-and-Build-Contract.md"><b>📕 Master build contract</b><span>audit-resolved rules, batches, acceptance criteria · v1.0</span></a>
+<a class="card5" href="design-auth-pack.html"><b>🎨 Epic 1 designs</b><span>auth pack, approved · flows 1–8</span></a>
+<a class="card5" href="epics/EPIC-01-authentication.md"><b>📋 Epic 1 contract</b><span>15 user stories + acceptance criteria</span></a>
+<a class="card5" href="journey-map.html"><b>🪐 Journey map</b><span>the whole system as an interactive map</span></a>
+<a class="card5" href="STATUS.md"><b>📊 Status board</b><span>one-line state of everything</span></a>
+</div></div>
+
+<!-- PRODUCT IN 5 LINES -->
+<div class="sect"><h2>The product in 5 lines</h2>
+<table><tr><td><b>What</b><td>A Duolingo-disciplined, honesty-first LMS for Georgian VET colleges — a game roadmap beside the real school (classes, grades, exams).</td></tr>
+<tr><td><b>Who</b><td>Adults 18+ in vocational programs — Programming, Culinary, Hospitality, Management, Design. Working people, phone-first.</td></tr>
+<tr><td><b>The loop</b><td>open → one next action → 6-minute floor → payout → tomorrow. Streaks on contracts, mistakes that pay back, leagues without shame.</td></tr>
+<tr><td><b>Two systems</b><td>Game layer (playful, Theme A) and School layer (calm, credible) — same brand, different registers.</td></tr>
+<tr><td><b>The law</b><td>submit-loss = 0 · ≤2 pushes/day · locked ≠ sealed · streak never lies — freeze or zero · no guilt copy · structured-only social.</td></tr></table></div>
+
+<!-- DOC MAP -->
+<div class="sect"><h2>Document map — everything, once</h2><p class="lead">32 surfaces. Status pills: <span class="pill p-cur">current</span> <span class="pill p-lock">locked</span> <span class="pill p-hist">historical</span> <span class="pill p-stale">partly superseded</span></p>
+<table><tr><th style="width:34%">Document</th><th>What it is / why</th><th style="width:13%">Status</th></tr>
+<tr><td colspan="3" style="background:#F6F8FE;font:900 10px ui-rounded;color:#3D5A99">PRD & REQUIREMENTS</td></tr>
+<tr><td><a class="doc" href="design-requirements.html">Part R · design-requirements.html</a></td><td>131 flows · 173 screens · 534 wireframes, trigger maps, D-register — the requirements source of truth</td><td><span class="pill p-lock">v2.5 locked</span></td></tr>
+<tr><td><a class="doc" href="prd-master.html">prd-master.html</a></td><td>every requirement in one accumulated doc with all wireframes embedded</td><td><span class="pill p-lock">v2.5 locked</span></td></tr>
+<tr><td><a class="doc" href="../10x-LMS-Product-PRD-and-Build-Contract.md">Master build contract (.md)</a></td><td>audit-resolved canonical rules, economy table, B1–B9 batches, acceptance criteria</td><td><span class="pill p-cur">v1.0 current</span></td></tr>
+<tr><td><a class="doc" href="journey-atlas.html">Part J · journey-atlas.html</a></td><td>flow triggers, events, exceptions — Part R's source</td><td><span class="pill p-stale">partly superseded</span></td></tr>
+<tr><td colspan="3" style="background:#F6F8FE;font:900 10px ui-rounded;color:#3D5A99">DESIGN SYSTEM & PACKS</td></tr>
+<tr><td><a class="doc" href="design-directions.html">design-directions.html</a></td><td>A/B/C shootout → A (Playful Bold) locked; B/C parked as future themes</td><td><span class="pill p-lock">locked</span></td></tr>
+<tr><td><a class="doc" href="design-kit.html">design-kit.html</a></td><td>Duolingo-kit language hero set</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="design-board.html">design-board.html</a></td><td>crafted core-loop artboard + tokens</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="design-flows.html">design-flows.html</a></td><td>all 131 flows in Theme A, flow by flow</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="design-auth-pack.html">design-auth-pack.html</a></td><td>Epic 1 rendered designs — approved</td><td><span class="pill p-lock">locked</span></td></tr>
+<tr><td><a class="doc" href="design-onboarding-pack.html">design-onboarding-pack.html</a></td><td>Epic 2 rendered designs — in redline</td><td><span class="pill p-cur">in redline</span></td></tr>
+<tr><td><a class="doc" href="design-system-shootout.html">design-system-shootout.html</a></td><td>early style exploration (superseded by directions board)</td><td><span class="pill p-hist">historical</span></td></tr>
+<tr><td><a class="doc" href="design-screens.html">design-screens.html</a></td><td>Batch-1 designed screens (40)</td><td><span class="pill p-hist">historical</span></td></tr>
+<tr><td colspan="3" style="background:#F6F8FE;font:900 10px ui-rounded;color:#3D5A99">MAPS & JOURNEYS</td></tr>
+<tr><td><a class="doc" href="journey-map.html">journey-map.html</a></td><td>neural solar-system map: 200 nodes, hover screenshots, pipeline filmstrips</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="lms-alignment-map.html">lms-alignment-map.html</a></td><td>visual: what exists vs what's planned vs our design</td><td><span class="pill p-hist">historical</span></td></tr>
+<tr><td><a class="doc" href="mascot-emotional-system.html">Part M · Kata</a></td><td>the cat's emotional system, sprites, voice rules</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="life-fit-emotional-resilience.html">Part L · life-fit</a></td><td>wounded streak, mercy, seasons — emotional architecture</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="mechanics-expansion-part-h.html">Part H · mechanics</a></td><td>gamified practice mechanics (economy superseded by contract economy table)</td><td><span class="pill p-stale">partly superseded</span></td></tr>
+<tr><td colspan="3" style="background:#F6F8FE;font:900 10px ui-rounded;color:#3D5A99">RESEARCH & AUDITS</td></tr>
+<tr><td><a class="doc" href="../research/prd_audit_requirements.md">audit · requirements</a></td><td>40 findings on Part R</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../research/prd_audit_docs.md">audit · docs & specs</a></td><td>35 findings on supporting docs</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../research/prd_research_duolingo.md">research · Duolingo & gamified learning</a></td><td>mechanic-by-mechanic evidence brief</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../research/prd_research_incumbents.md">research · incumbents & Georgia</a></td><td>GC/Moodle/Canvas, GitHub Classroom, integrity, multi-tenant, VET anchors</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="ux-analysis-10-iterations.html">ux-analysis-10-iterations.html</a></td><td>10 UX iteration analyses, D-01…D-12 origin</td><td><span class="pill p-hist">historical</span></td></tr>
+<tr><td><a class="doc" href="../LMS-Current-State-Analysis.md">LMS repo analysis</a></td><td>what the existing LMS has (31 migrations, routes, features)</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../program-plan-v6-reconsiderations.md">program plan v6 review</a></td><td>8 reconsiderations vs the 10-month Front-End plan</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td colspan="3" style="background:#F6F8FE;font:900 10px ui-rounded;color:#3D5A99">ENGINEERING SPECS</td></tr>
+<tr><td><a class="doc" href="../specs/01-DATA-MODEL-MERGE.md">spec 01 · data model merge</a></td><td>tables for the practice layer</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../specs/02-COMMIT-VERIFY-MACHINE.md">spec 02 · commit-verify</a></td><td>GitHub App → webhook → commit credit</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../specs/03-EVENT-BUS.md">spec 03 · event bus</a></td><td>all domain events + jobs</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../specs/04-SYNC-OFFLINE-CONTRACT.md">spec 04 · offline sync</a></td><td>outbox, idempotency, conflict rules</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../specs/05-NOTIFICATION-BROKER.md">spec 05 · notification broker</a></td><td>≤2/day budget, quiet hours, priorities</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td colspan="3" style="background:#F6F8FE;font:900 10px ui-rounded;color:#3D5A99">STATUS & SKILL</td></tr>
+<tr><td><a class="doc" href="STATUS.md">STATUS.md</a></td><td>living one-line state of every item</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../product-design-engine.skill">product-design-engine.skill</a></td><td>the design engine skill (installable) used for every pack</td><td><span class="pill p-cur">current</span></td></tr>
+<tr><td><a class="doc" href="../10x-backup-bundle.zip">10x-backup-bundle.zip</a></td><td>everything as one download (PRD + epic + designs + skill)</td><td><span class="pill p-cur">current</span></td></tr>
+</table></div>
+
+<div class="foot">10x LMS · this hub is generated from the live workspace · outdated links are removed, not preserved · if something 404s, it's a bug — report it.</div>
+</div></body></html>
